@@ -3,7 +3,7 @@
 
 #define INDUCTION_MACHINE 1
 #define SYNCHRONOUS_MACHINE 2
-#define MACHINE_TYPE SYNCHRONOUS_MACHINE
+#define MACHINE_TYPE INDCUTION_MACHINE
 
 /* standard lib */
 #include <stdio.h> // printf #include <stdbool.h> // bool for _Bool and true for 1
