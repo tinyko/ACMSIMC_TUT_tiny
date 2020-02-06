@@ -10,19 +10,19 @@ style = np.random.choice(plt.style.available); print(style); plt.style.use('gray
 # plot setting
 mpl.rcParams['mathtext.fontset'] = 'stix'
 mpl.rcParams['font.family'] = 'STIXGeneral'
-mpl.rcParams['legend.fontsize'] = 12.5
+mpl.rcParams['legend.fontsize'] = 11
 # mpl.rcParams['legend.family'] = 'Times New Roman'
 mpl.rcParams['font.family'] = ['Times New Roman']
-mpl.rcParams['font.size'] = 14.0
+mpl.rcParams['font.size'] = 11.0
 # mpl.style.use('classic')
 font = {'family' : 'Times New Roman', #'serif',
         'color' : 'darkblue',
         'weight' : 'normal',
-        'size' : 14,}
+        'size' : 11,}
 textfont = {'family' : 'Times New Roman', #'serif',
             'color' : 'darkblue',
             'weight' : 'normal',
-            'size' : 11.5,}
+            'size' : 9,}
 
 df_profiles = pd.read_csv(r"./algorithm.dat", na_values = ['1.#QNAN', '-1#INF00', '-1#IND00'])
 df_info = pd.read_csv(r"./info.dat", na_values = ['1.#QNAN', '-1#INF00', '-1#IND00'])
