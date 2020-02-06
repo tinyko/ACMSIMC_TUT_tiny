@@ -13,7 +13,9 @@
 #include "stdlib.h" // for rand()
 #include "math.h"
 #include "time.h"
-
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
 #if MACHINE_TYPE == INDUCTION_MACHINE
     #define VVVF_CONTROL 0
     #define IFOC 1
