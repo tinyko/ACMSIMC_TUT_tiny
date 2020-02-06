@@ -4,7 +4,9 @@
 #define INDUCTION_MACHINE 1
 #define SYNCHRONOUS_MACHINE 2
 #define MACHINE_TYPE INDUCTION_MACHINE
-
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
 /* standard lib */
 #include <stdio.h> // printf #include <stdbool.h> // bool for _Bool and true for 1
 // #include <stdbool.h> // bool for _Bool and true for 1
@@ -28,7 +30,7 @@
     #define VOLTAGE_CURRENT_DECOUPLING_CIRCUIT false
 
     #define SATURATED_MAGNETIC_CIRCUIT true
-    #define INVERTER_NONLINEARITY true
+    #define INVERTER_NONLINEARITY false
 
 #elif MACHINE_TYPE == SYNCHRONOUS_MACHINE
     #define NULL_D_AXIS_CURRENT_CONTROL -1
