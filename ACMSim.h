@@ -16,6 +16,8 @@
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
 #endif
+
+//Motor Control Scheme
 #if MACHINE_TYPE == INDUCTION_MACHINE
     #define VVVF_CONTROL 0
     #define IFOC 1
@@ -41,17 +43,17 @@
 #endif
 
 /* How long should I go? */
-#define NUMBER_OF_LINES (150000)
-
+#define RUN_TIME 15.0 //in seconds
 #define MACHINE_TS 1.25e-4
 #define MACHINE_TS_INVERSE 8000
+#define NUMBER_OF_LINES (int)(RUN_TIME/MACHINE_TS)
 #define DOWN_FREQ_EXE 2
 #define DOWN_FREQ_EXE_INVERSE 0.5
 #define TS (MACHINE_TS*DOWN_FREQ_EXE) //2.5e-4 
 #define TS_INVERSE (MACHINE_TS_INVERSE*DOWN_FREQ_EXE_INVERSE) // 4000
 #define DOWN_SAMPLE 1 // 5 // 10
 
-/* Macro for Part transformation*/
+/* Macro for Park transformation*/
 #define AB2M(A, B, COS, SIN)  ( (A)*COS  + (B)*SIN )
 #define AB2T(A, B, COS, SIN)  ( (A)*-SIN + (B)*COS )
 #define MT2A(M, T, COS, SIN)  ( (M)*COS - (T)*SIN )
@@ -91,16 +93,16 @@
 
 #if MACHINE_TYPE == INDUCTION_MACHINE
     struct InductionMachineSimulated{
-        double ial;
-        double ibe;
-        double psi_al;
-        double psi_be;
+        double ial; //Current Alpha Component
+        double ibe; //Current Beta Component
+        double psi_al; //
+        double psi_be; //
 
-        double ual;
-        double ube;
+        double ual; //Voltage Alpha Component
+        double ube; //Voltage Beta Component
 
         double x[13]; ////////////////////////////////
-        double rpm;
+        double rpm; //revolutions per minute
         double rpm_cmd;
         double rpm_deriv_cmd;
         double Tload;
