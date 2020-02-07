@@ -101,29 +101,29 @@
         double ual; //Voltage Alpha Component
         double ube; //Voltage Beta Component
 
-        double x[13]; ////////////////////////////////
+        double x[13]; //Motor Status
         double rpm; //revolutions per minute
-        double rpm_cmd;
-        double rpm_deriv_cmd;
-        double Tload;
-        double Tem;
+        double rpm_cmd; //speed command
+        double rpm_deriv_cmd; //derivative of speed command 
+        double Tload; //Load Torque
+        double Tem; //Electrical Torque
 
-        double Js;
-        double npp;
-        double mu_m;
-        double Ts;
+        double Js; //moment of inertia
+        double npp; //number of pole pairs
+        double mu_m; //=npp/Js
+        double Ts; //sampling time
 
-        double Lsigma;
-        double rs;
-        double rreq;
-        double Lmu;
-        double Lmu_inv;
-        double alpha;
+        double Lsigma; //Leakage induction
+        double rs; //stator resistance
+        double rreq; //equivalent rotor resistance
+        double Lmu; //magnetic induction
+        double Lmu_inv; //inverse of Lmu
+        double alpha; //inverse of rotor time constant = Lmu/Lr
 
-        double Lm;
-        double rr;
-        double Lls;
-        double Llr;
+        double Lm; //mutual induction
+        double rr; //rotor resistance
+        double Lls; //stator leakage induction
+        double Llr; //rotor leakage induction
         double Lm_slash_Lr;
         double Lr_slash_Lm;
 
