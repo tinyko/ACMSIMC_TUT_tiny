@@ -41,6 +41,6 @@ In near future, tge Engligh version will be brought about.
 TO DO List
 1) Seperate Programm Functions into different python modules
 2) GUI in QT
-2.5) Async communications between Real-time and GUI module
-3) design a python to c source translator(like simulink) (further plan)
-4) motor topology
+3) Async communications between Real-time and GUI module
+4) design a python to c source translator(like simulink) (further plan)
+5) motor topology
