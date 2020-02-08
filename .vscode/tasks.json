@@ -7,9 +7,22 @@
             "type": "shell",
             "label": "gcc.exe build active file",
             "command": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gcc.exe",
+<<<<<<< HEAD
             "args": ["${file} ${fileDirname}\\controller.c ${fileDirname}\\observer.c",
                  "-o",
                  "${file_base_name} && start cmd /c \"${fileDirname}\\${fileBasenameNoExtension}.exe\""
+=======
+            "args": [
+                "${file}",
+                "${fileDirname}\\inverter.c",
+                "${fileDirname}\\controller.c",
+                "${fileDirname}\\observer.c", 
+                "${fileDirname}\\observerTAAO.c",
+                "-Llibs", 
+                "-lsatlut",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+>>>>>>> inverter_model
             ],
             "options": {
                 "cwd": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin"
@@ -18,6 +31,10 @@
                 "$gcc"
             ],
             "group": "build"
+<<<<<<< HEAD
         }
+=======
+        },
+>>>>>>> inverter_model
     ]
 }

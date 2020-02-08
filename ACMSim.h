@@ -15,7 +15,11 @@
 #include "stdlib.h" // for rand()
 #include "math.h"
 #include "time.h"
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
 
+//Motor Control Scheme
 #if MACHINE_TYPE == INDUCTION_MACHINE
     #define VVVF_CONTROL 0
     #define IFOC 1
@@ -46,17 +50,17 @@
 #endif
 
 /* How long should I go? */
-#define NUMBER_OF_LINES (5*150000)
-
+#define RUN_TIME 15.0 //in seconds
 #define MACHINE_TS 1.25e-4
 #define MACHINE_TS_INVERSE 8000
+#define NUMBER_OF_LINES (int)(RUN_TIME/MACHINE_TS)
 #define DOWN_FREQ_EXE 2
 #define DOWN_FREQ_EXE_INVERSE 0.5
 #define TS (MACHINE_TS*DOWN_FREQ_EXE) //2.5e-4 
 #define TS_INVERSE (MACHINE_TS_INVERSE*DOWN_FREQ_EXE_INVERSE) // 4000
 #define DOWN_SAMPLE 1 // 5 // 10
 
-/* Macro for Part transformation*/
+/* Macro for Park transformation*/
 #define AB2M(A, B, COS, SIN)  ( (A)*COS  + (B)*SIN )
 #define AB2T(A, B, COS, SIN)  ( (A)*-SIN + (B)*COS )
 #define MT2A(M, T, COS, SIN)  ( (M)*COS - (T)*SIN )
@@ -96,37 +100,37 @@
 
 #if MACHINE_TYPE == INDUCTION_MACHINE
     struct InductionMachineSimulated{
-        double ial;
-        double ibe;
-        double psi_al;
-        double psi_be;
+        double ial; //Current Alpha Component
+        double ibe; //Current Beta Component
+        double psi_al; //
+        double psi_be; //
 
-        double ual;
-        double ube;
+        double ual; //Voltage Alpha Component
+        double ube; //Voltage Beta Component
 
-        double x[13]; ////////////////////////////////
-        double rpm;
-        double rpm_cmd;
-        double rpm_deriv_cmd;
-        double Tload;
-        double Tem;
+        double x[13]; //Motor Status
+        double rpm; //revolutions per minute
+        double rpm_cmd; //speed command
+        double rpm_deriv_cmd; //derivative of speed command 
+        double Tload; //Load Torque
+        double Tem; //Electrical Torque
 
-        double Js;
-        double npp;
-        double mu_m;
-        double Ts;
+        double Js; //moment of inertia
+        double npp; //number of pole pairs
+        double mu_m; //=npp/Js
+        double Ts; //sampling time
 
-        double Lsigma;
-        double rs;
-        double rreq;
-        double Lmu;
-        double Lmu_inv;
-        double alpha;
+        double Lsigma; //Leakage induction
+        double rs; //stator resistance
+        double rreq; //equivalent rotor resistance
+        double Lmu; //magnetic induction
+        double Lmu_inv; //inverse of Lmu
+        double alpha; //inverse of rotor time constant = Lmu/Lr
 
-        double Lm;
-        double rr;
-        double Lls;
-        double Llr;
+        double Lm; //mutual induction
+        double rr; //rotor resistance
+        double Lls; //stator leakage induction
+        double Llr; //rotor leakage induction
         double Lm_slash_Lr;
         double Lr_slash_Lm;
 
