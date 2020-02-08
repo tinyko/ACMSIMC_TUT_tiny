@@ -46,3 +46,13 @@ In near future, tge Engligh version will be brought about.
 > If you speak Chinese, I have a dedicated tutorial video on how to make this thing work from the ground up.
 > Please take a look at this link to [知乎](https://zhuanlan.zhihu.com/p/64445558).
 > In fact, now you can check out [my personal page](https://horychen.github.io) for a list of tutorial videos.
+
+#################################Original Post Above
+
+## Tiny 2020.02.08
+TO DO List
+1) Seperate Programm Functions into different python modules
+2) GUI in QT
+2.5) Async communications between Real-time and GUI module
+3) design a python to c source translator(like simulink) (further plan)
+4) motor topology
