@@ -10,18 +10,6 @@ The benefit is that you can direct reuse the codes in DSP based motor drive.
 The numerical integration method is currently RK4, which is quite enough. 
 DoPri54 will be included in future version (including stiffness detection and variable step numerical integration).
 
-## Introduction to Current Branches:
-- [IM] master: combination of other branches, kept in a developing status in which I feel good.
-- [IM] vvvf: the skeleton with induction motor simulation and VVVF control.
-- [IM] foc: field oriented control (direct/indirect) with basic sensorless control.
-- [IM] animate: test the feature of waveform (results) animation.
-- [PMSM] pmsm: id=0 control for interior permanent magnet synchronous motor.
-- [IM] vi_decouple: add voltage-current decoupling circuit for improved control performance during high speed reversal.
-- [IM] mras: model reference adaptive system based sensorless control (my 2017-Chen.Huang-Online paper).
-- [IM] \_femm: (This branch does not really belong here but I don't want to create a new repository for it...) It is about the design of the induction motor using free softwares as well as fitting the design to the equivalent circuit parameters for further control simulation.
-- [IM] saturation: include iron core saturation effect into the induction motor model simulation.
-- [Both] inverter_model: simple inverter modeling based on the paper 1996-Choi.Sul-Inverter.
-
 ## Visualization
 - The plots are made using package matplotlib. 
     - In branch animate, I tested the feature of waveform animation with matplotlib.
