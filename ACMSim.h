@@ -15,9 +15,6 @@
 #include "stdlib.h" // for rand()
 #include "math.h"
 #include "time.h"
-#ifndef M_PI
-    #define M_PI 3.14159265358979323846
-#endif
 
 //Motor Control Scheme
 #if MACHINE_TYPE == INDUCTION_MACHINE
