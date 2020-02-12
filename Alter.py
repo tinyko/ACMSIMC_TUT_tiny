@@ -13,12 +13,12 @@ CONTROL_STRATEGY=IFOC
 
 TAJIMA96=0
 TOTALLY_ADAPTIVE_OBSERVER=1 # Flux-MRAS
-OBSERVER_APPLIED=0
+OBSERVER_APPLIED=1
 
 SENSORLESS_CONTROL=False
-VOLTAGE_CURRENT_DECOUPLING_CIRCUIT=False
+VOLTAGE_CURRENT_DECOUPLING_CIRCUIT=True
 SATURATED_MAGNETIC_CIRCUIT=True
-INVERTER_NONLINEARITY=False
+INVERTER_NONLINEARITY=True
 
 RUN_TIME=15.0 #in seconds
 MACHINE_TS =1.25e-4
@@ -332,18 +332,18 @@ class ACIM():
 
         # API for explicit access
         if MACHINE_TYPE == INDUCTION_MACHINE:
-            self.rK555_Lin(CTRL.timebase, self.x, self.Ts) 
-            self.ial    = self.x[0]  # rK555_Lin
-            self.ibe    = self.x[1]  # rK555_Lin
-            self.psi_al = self.x[2]  # rK555_Lin
-            self.psi_be = self.x[3]  # rK555_Lin
+            # self.rK555_Lin(CTRL.timebase, self.x, self.Ts) 
+            # self.ial    = self.x[0]  # rK555_Lin
+            # self.ibe    = self.x[1]  # rK555_Lin
+            # self.psi_al = self.x[2]  # rK555_Lin
+            # self.psi_be = self.x[3]  # rK555_Lin
 
            
-            # self.rK555_Sat(CTRL.timebase, self.x, self.Ts) 
-            # self.ial    = self.ids  # rK555_Sat
-            # self.ibe    = self.iqs  # rK555_Sat
-            # self.psi_al = self.x[2]*self.Lm_slash_Lr  # rK555_Sat
-            # self.psi_be = self.x[3]*self.Lm_slash_Lr  # rK555_Sat
+            self.rK555_Sat(CTRL.timebase, self.x, self.Ts) 
+            self.ial    = self.ids  # rK555_Sat
+            self.ibe    = self.iqs  # rK555_Sat
+            self.psi_al = self.x[2]*self.Lm_slash_Lr  # rK555_Sat
+            self.psi_be = self.x[3]*self.Lm_slash_Lr  # rK555_Sat
 
             self.rpm    = self.x[4] * 60 / (2 * np.pi * self.npp) 
 
