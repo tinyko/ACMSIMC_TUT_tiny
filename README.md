@@ -8,5 +8,5 @@ TO DO List
 
 ## Tiny 2020.02.12
 Done List
-1) Converted C program into Python Single File ('Alter.py')
-2) Modified ACMPlot.py as a library to Main Python Script
+1) Converted C program into Python Single File "Alter"
+2) Modified ACMPlot as a library to Main Python Script
