@@ -808,7 +808,7 @@ class FileIO():
         if(self.j == DOWN_SAMPLE):
             self.j=0
             f.write("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}\n".
-                    format(IM[0],IM.x[1],IM.x[2],IM.x[3],IM.x[4],IM.Tem,IM.ual,IM.ube,IM.ial,IM.ibe,IM.rpm_cmd,IM.rpm_cmd-IM.x[4]*IM.RAD_PER_SEC_2_RPM))
+                    format(IM.x[0],IM.x[1],IM.x[2],IM.x[3],IM.x[4],IM.Tem,IM.ual,IM.ube,IM.ial,IM.ibe,IM.rpm_cmd,IM.rpm_cmd-IM.x[4]*IM.RAD_PER_SEC_2_RPM))
 
 IM=ACIM()
 OB=Observer()
