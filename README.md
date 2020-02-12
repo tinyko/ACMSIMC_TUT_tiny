@@ -5,3 +5,8 @@ TO DO List
 3) Async communications between Real-time and GUI module
 4) design a python to c source translator(like simulink) (further plan)
 5) motor topology
+
+## Tiny 2020.02.12
+Done List
+1) Converted C program into Python Single File ('Alter.py')
+2) Modified ACMPlot.py as a library to Main Python Script

@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import ACMPlot
+
 np.seterr(all='raise')
 INDUCTION_MACHINE=1
 SYNCHRONOUS_MACHINE=2
@@ -859,3 +861,5 @@ for _ in range(NUMBER_OF_LINES):
 
     IM.inverter_model()
 f.close()
+
+ACMPlot.main()
