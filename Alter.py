@@ -17,7 +17,7 @@ OBSERVER_APPLIED=0
 
 SENSORLESS_CONTROL=False
 VOLTAGE_CURRENT_DECOUPLING_CIRCUIT=False
-SATURATED_MAGNETIC_CIRCUIT=False
+SATURATED_MAGNETIC_CIRCUIT=True
 INVERTER_NONLINEARITY=False
 
 RUN_TIME=15.0 #in seconds
@@ -221,7 +221,7 @@ class ACIM():
             self.psimd = self.psim/self.iz*self.izd 
         else :
             if selfSIMC_DEBUG :
-                printf("how to handle zero iz?\n")
+                print("how to handle zero iz?\n")
             self.psimq = 0.0 
             self.psimd = 0.0 
         self.iqs = (self.x[1] - self.psimq) / self.Lls 
@@ -290,12 +290,12 @@ class ACIM():
             # mechanical model
             self.Tem = self.npp*(x[1]*x[2]-x[0]*x[3]) 
             fx[4] = (self.Tem - self.Tload)*self.mu_m  # elec. angular rotor speed
-            fx[5] = x[4]                            # elec. angular rotor position
+            #fx[5] = x[4]                            # elec. angular rotor position
 
 
     def rK555_Lin(self,t, x, hs):
         if MACHINE_TYPE == INDUCTION_MACHINE:
-            NUMBER_OF_STATES=6
+            NUMBER_OF_STATES=5
         NS=NUMBER_OF_STATES
         k1=k2=k3=k4=xk=fx=np.zeros(NS)
         
@@ -323,13 +323,13 @@ class ACIM():
 
         # API for explicit access
         if MACHINE_TYPE == INDUCTION_MACHINE:
-            # rK555_Lin(CTRL.timebase, self.x, self.Ts) 
+            #self.rK555_Lin(CTRL.timebase, self.x, self.Ts) 
             # self.ial    = self.x[0]  # rK555_Lin
             # self.ibe    = self.x[1]  # rK555_Lin
             # self.psi_al = self.x[2]  # rK555_Lin
             # self.psi_be = self.x[3]  # rK555_Lin
 
-            #self.rK555_Sat(CTRL.timebase, self.x, self.Ts)
+           
             self.rK555_Sat(CTRL.timebase, self.x, self.Ts) 
             self.ial    = self.ids  # rK555_Sat
             self.ibe    = self.iqs  # rK555_Sat
@@ -339,10 +339,10 @@ class ACIM():
             self.rpm    = self.x[4] * 60 / (2 * np.pi * self.npp) 
 
 
-        if(isNumber(self.rpm)):
+        if(self.rpm!=np.nan):
             return False
         else :
-            printf("self.rpm is %g\n", self.rpm)
+            print("self.rpm is {0}\n", self.rpm)
             return True       
 
     def InverterNonlinearity_SKSul96(self, ual, ube, ial, ibe):
@@ -402,8 +402,8 @@ def measurement():
     OB.im.us_prev[1] = OB.im.us_curr[1]
 
     if MACHINE_TYPE == INDUCTION_MACHINE:
-        OB.im.is_prev[0] = IM.ial
-        OB.im.is_prev[1] = IM.ibe
+        OB.im.is_curr[0] = IM.ial
+        OB.im.is_curr[1] = IM.ibe
         OB.im.omg = IM.x[4]
         OB.im.theta_r = IM.x[5]
 
@@ -510,6 +510,8 @@ class Observer():
 
         self.psi_mu_al = 0.0
         self.psi_mu_be = 0.0
+        # self.psi_s_al = 0.0
+        # self.psi_s_be = 0.0
     def observation(self):
         rotor_flux_cmd = CTRL.rotor_flux_cmd
         iMs = CTRL.iMs
@@ -527,10 +529,11 @@ class Observer():
         self.tajima.omg = self.tajima.omega_syn - self.tajima.omega_sl # Instantaneous Velocity Computation
 
         # Flux estimation 1: Voltage model (implemented by shitty Euler method for now)
-        psi_s_al = 0.0
-        psi_s_be = 0.0
+        
         deriv_psi_s_al = self.im.us_curr[0] - self.rs*self.im.is_curr[0]
-        deriv_psi_s_be = self.im.us_curr[0] - self.rs*self.im.is_curr[1]
+        deriv_psi_s_be = self.im.us_curr[1] - self.rs*self.im.is_curr[1]
+        psi_s_al=psi_s_be=0
+        
         psi_s_al += TS*deriv_psi_s_al
         psi_s_be += TS*deriv_psi_s_be
         self.psi_mu_al = psi_s_al - self.Lsigma*self.im.i_s[0]
@@ -820,16 +823,18 @@ for _ in range(NUMBER_OF_LINES):
 
     # Command and Load Torque */
     # cmd_fast_speed_reversal(CTRL.timebase, 5, 5, 1500); // timebase, instant, interval, rpm_cmd
-    cmd_fast_speed_reversal(CTRL.timebase, 1, 5, 100) # timebase, instant, interval, rpm_cmd
+    cmd_fast_speed_reversal(CTRL.timebase, 5, 5, 100) # timebase, instant, interval, rpm_cmd
     # ACM.Tload = 5 * sign(ACM.rpm); 
-
+    if CTRL.timebase>= 5.00275 :
+        print('no')
+    
     IM.Tload = 0 * np.sign(IM.rpm) # No-load test
     #print(IM.rpm)
     # ACM.Tload = ACM.Tem; // Blocked-rotor test
 
     # Simulated ACM */
     if(IM.machine_simulation()): 
-        printf("Break the loop.\n")
+        print("Break the loop.\n")
         break
     dfe+=1
     if(dfe==DOWN_FREQ_EXE):
@@ -842,8 +847,6 @@ for _ in range(NUMBER_OF_LINES):
 
         OB.observation()
 
-        #write_data_to_file(fw)
-        #result.append([IM.x[0],IM.x[1],IM.x[2],IM.x[3],IM.x[4],IM.Tem,IM.ual,IM.ube,IM.ial,IM.ibe,IM.rpm_cmd,IM.rpm_cmd-IM.x[4]*IM.RAD_PER_SEC_2_RPM])
         fio.write_data_to_file(f)
         
         CTRL.control(IM.rpm_cmd, 0)
