@@ -292,10 +292,9 @@ class ACIM():
             fx[4] = (self.Tem - self.Tload)*self.mu_m  # elec. angular rotor speed
             #fx[5] = x[4]                            # elec. angular rotor position
 
-
     def rK555_Lin(self,t, x, hs):
         if MACHINE_TYPE == INDUCTION_MACHINE:
-            NUMBER_OF_STATES=5
+            NUMBER_OF_STATES=6
         NS=NUMBER_OF_STATES
         k1=k2=k3=k4=xk=fx=np.zeros(NS)
         
@@ -323,18 +322,18 @@ class ACIM():
 
         # API for explicit access
         if MACHINE_TYPE == INDUCTION_MACHINE:
-            #self.rK555_Lin(CTRL.timebase, self.x, self.Ts) 
-            # self.ial    = self.x[0]  # rK555_Lin
-            # self.ibe    = self.x[1]  # rK555_Lin
-            # self.psi_al = self.x[2]  # rK555_Lin
-            # self.psi_be = self.x[3]  # rK555_Lin
+            self.rK555_Lin(CTRL.timebase, self.x, self.Ts) 
+            self.ial    = self.x[0]  # rK555_Lin
+            self.ibe    = self.x[1]  # rK555_Lin
+            self.psi_al = self.x[2]  # rK555_Lin
+            self.psi_be = self.x[3]  # rK555_Lin
 
            
-            self.rK555_Sat(CTRL.timebase, self.x, self.Ts) 
-            self.ial    = self.ids  # rK555_Sat
-            self.ibe    = self.iqs  # rK555_Sat
-            self.psi_al = self.x[2]*self.Lm_slash_Lr  # rK555_Sat
-            self.psi_be = self.x[3]*self.Lm_slash_Lr  # rK555_Sat
+            # self.rK555_Sat(CTRL.timebase, self.x, self.Ts) 
+            # self.ial    = self.ids  # rK555_Sat
+            # self.ibe    = self.iqs  # rK555_Sat
+            # self.psi_al = self.x[2]*self.Lm_slash_Lr  # rK555_Sat
+            # self.psi_be = self.x[3]*self.Lm_slash_Lr  # rK555_Sat
 
             self.rpm    = self.x[4] * 60 / (2 * np.pi * self.npp) 
 
@@ -389,11 +388,6 @@ class ACIM():
             self.ube = CTRL.ube
 
         # 冗余变量赋值
-    #     if MACHINE_TYPE == INDUCTION_MACHINE:
-
-    #     elif MACHINE_TYPE == SYNCHRONOUS_MACHINE:
-    #         self.ud = AB2M(self.ual, self.ube, cos(self.theta_d), sin(self.theta_d))
-    #         self.uq = AB2T(self.ual, self.ube, cos(self.theta_d), sin(self.theta_d))
 
 def measurement():
     OB.im.us_curr[0] = CTRL.ual
@@ -510,8 +504,8 @@ class Observer():
 
         self.psi_mu_al = 0.0
         self.psi_mu_be = 0.0
-        # self.psi_s_al = 0.0
-        # self.psi_s_be = 0.0
+        self.psi_s_al = 0.0
+        self.psi_s_be = 0.0
     def observation(self):
         rotor_flux_cmd = CTRL.rotor_flux_cmd
         iMs = CTRL.iMs
@@ -534,10 +528,10 @@ class Observer():
         deriv_psi_s_be = self.im.us_curr[1] - self.rs*self.im.is_curr[1]
         psi_s_al=psi_s_be=0
         
-        psi_s_al += TS*deriv_psi_s_al
-        psi_s_be += TS*deriv_psi_s_be
-        self.psi_mu_al = psi_s_al - self.Lsigma*self.im.i_s[0]
-        self.psi_mu_be = psi_s_be - self.Lsigma*self.im.i_s[1]
+        self.psi_s_al += TS*deriv_psi_s_al
+        self.psi_s_be += TS*deriv_psi_s_be
+        self.psi_mu_al = self.psi_s_al - self.Lsigma*self.im.i_s[0]
+        self.psi_mu_be = self.psi_s_be - self.Lsigma*self.im.i_s[1]
 
         # Flux estimation 2: Current model (this is a bad flux estimator)  
 
@@ -689,7 +683,7 @@ class CTRL0():
 
         # Input 1 is feedback: estimated speed or measured speed
         if SENSORLESS_CONTROL :
-            self.omg_fb = OB.tajima.om
+            self.omg_fb = OB.tajima.omg
             # #if OBSERVER_APPLIED == TAJIMA96
             #     CTRL.omega_syn = ob.tajima.omega_syn;
             #     CTRL.omega_sl  = ob.tajima.omega_sl;
@@ -723,6 +717,7 @@ class CTRL0():
         # T-axis current command
         self.vc_count+=1
         if(self.vc_count == VC_LOOP_CEILING * DOWN_FREQ_EXE_INVERSE):
+        #if(True):
             self.vc_count = 0
             self.omg_ctrl_err = self.omg_fb - speed_cmd * IM.RPM_2_RAD_PER_SEC
             self.iTs_cmd = - self.PI(self.pi_speed, self.omg_ctrl_err)
@@ -747,10 +742,10 @@ class CTRL0():
             elif(self.theta_M < -np.pi):
                 self.theta_M += 2*np.pi # 反转！
 
-            if VOLTAGE_CURRENT_DECOUPLING_CIRCUIT:
-                self.omega_sl = self.rreq*self.iTs / self.rotor_flux_cmd
-            else:
-                self.omega_sl = self.rreq*self.iTs_cmd / self.rotor_flux_cmd
+            # if VOLTAGE_CURRENT_DECOUPLING_CIRCUIT:
+            #     self.omega_sl = self.rreq*self.iTs / self.rotor_flux_cmd
+            # else:
+            self.omega_sl = self.rreq*self.iTs_cmd / self.rotor_flux_cmd
 
             self.omega_syn = self.omg_fb + self.omega_sl
 
