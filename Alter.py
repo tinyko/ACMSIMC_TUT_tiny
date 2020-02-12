@@ -256,7 +256,12 @@ class ACIM():
         fx[4] = (self.Tem - self.Tload)*self.mu_m 
     
     def rK555_Sat(self,t, x, hs):
-        k1=k2=k3=k4=xk=fx=np.zeros(5)
+        k1=np.zeros(5)
+        k2=np.zeros(5)
+        k3=np.zeros(5)
+        k4=np.zeros(5)
+        xk=np.zeros(5)
+        fx=np.zeros(5)
 
         self.rK5_satDynamics(t, x, fx)  # timer.t,
         for i in range(5):    
@@ -296,7 +301,12 @@ class ACIM():
         if MACHINE_TYPE == INDUCTION_MACHINE:
             NUMBER_OF_STATES=6
         NS=NUMBER_OF_STATES
-        k1=k2=k3=k4=xk=fx=np.zeros(NS)
+        k1=np.zeros(NS)
+        k2=np.zeros(NS)
+        k3=np.zeros(NS)
+        k4=np.zeros(NS)
+        xk=np.zeros(NS)
+        fx=np.zeros(NS)
         
         self.rK5_dynamics(t, x, fx)  # timer.t,
         for i in range(NS):        
@@ -820,8 +830,8 @@ for _ in range(NUMBER_OF_LINES):
     # cmd_fast_speed_reversal(CTRL.timebase, 5, 5, 1500); // timebase, instant, interval, rpm_cmd
     cmd_fast_speed_reversal(CTRL.timebase, 5, 5, 100) # timebase, instant, interval, rpm_cmd
     # ACM.Tload = 5 * sign(ACM.rpm); 
-    if CTRL.timebase>= 5.00275 :
-        print('no')
+    # if CTRL.timebase>= 5.00275 :
+    #     print('no')
     
     IM.Tload = 0 * np.sign(IM.rpm) # No-load test
     #print(IM.rpm)
