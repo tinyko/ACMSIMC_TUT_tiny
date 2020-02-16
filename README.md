@@ -26,9 +26,65 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
       * **ResultPrint** : Print result table in tabulate
 
 * Prerequisites
-   * Python V3.8
-   * 
-## Tiny 2020.02.16
+   * Python V3.8.1
+   * <a href="./requirements">Requirements</a>
+
+* HOWTO
+   * Open your favourite Terminal/Shell 
+   * Change work path to a directory you like
+   * Run code below
+      ```shell
+      mkdir ACMSIM
+      cd ACMSIM
+      git clone https://github.com/tinyko/_TINY_ACMSIMC.git .
+      python main.py
+      ```
+   *  Wait for seconds until **algorithm.dat** and **info.dat** file are generated
+   *  Then matplotlib.pyplot is shown figures
+
+## Development plans
+
+* Visualized Configuration of AC Induction Motor
+   * Stator and rotor Laminations Design
+   * Coil Winding Calculations
+   * Skewed Rotor bar
+   * Materials Difference
+   * Losses
+      * Mechanical Losses
+      * Iron Losses 
+      * Copper Losses 
+      * Wind friction Losses
+   * Deep bar effects , Skin effect and the Eddy currents
+* GUI in PyQT5 with Trend Viewer , Plots Evaluating ,.etc 
+* Full No Load Test and More Detailed Motor Model
+* Control Schemes
+   * V/F Scalar Control
+   * Vector Control
+      * DTC(Direct Torque Control)
+         * DSC(Direct Self-control)
+         * SVM(Space Vector Modulation)
+      * FOC(Field Oriented Cowntrol)
+         * Direct FOC
+         * Indirect FOC
+   * Sensorless Control
+   * Magnetic-field Weakening
+   * (Un)Coiler tension control 
+   * Two-mass drives issue 
+   * Ramp
+      * Linear Reference
+      * S-curve
+      * 6th-Derivative-of-Position
+* Stable And Transient Motor Model Analysis
+* AC-AC(DC-AC) converter Topology
+   * Converter with DC-link
+      * (regenerative) voltage-source
+      * current-source
+   * Matrix Converter
+      * the Direct Matrix
+      * the indirect matrix
+   * Hybrid Matrix
+
+## Develop Notes (Tiny 2020.02.16)
 TO DO List
 1) ~~Seperate Programm Functions into different python modules~~
 2) GUI in PyQT5 (~~Auto Scale GUI, QT GUI layout~~)
