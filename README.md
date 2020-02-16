@@ -1,5 +1,5 @@
 # AC Induction Motor Simulation in Python
-![Screenshot](./Screenshot/SeperateModules.jpg "Screenshot in vscode")
+![Screenshot](./Screenshot/SeparateModules.jpg "Screenshot in vscode")
 
 ## Introduction
 This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_motor">AC induction motor</a> in Python.
@@ -86,7 +86,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
 
 ## Develop Notes (Tiny 2020.02.16)
 TO DO List
-1) ~~Seperate Programm Functions into different python modules~~
+1) ~~Separate Programm Functions into different python modules~~
 2) GUI in PyQT5 (~~Auto Scale GUI, QT GUI layout~~)
 3) Async communications between Real-time and GUI module
 4) Design a python to c source translator(like simulink) (further plan)
@@ -96,7 +96,7 @@ TO DO List
 8) Save all **critical** data in trends
 9) Create ~~a speical~~ **HDF5** data file structure to contain data informations(timebase,timestamp,.etc) and values(bool,string,int,float,.etc)
 10) Remove all **redundant** code and cross-reference
-11) Seperate ODE-solver to a single module , Current Method is Runge-Kutta 5th order Method
+11) Separate ODE-solver to a single module , Current Method is Runge-Kutta 5th order Method
       * Methods
          * Implicit(Explicit) Runge-Kutta Methods
          * Adams–Bashforth methods
