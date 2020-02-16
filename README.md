@@ -1,3 +1,5 @@
+# AC Induction Motor Simulation in Python
+![Screenshot](./Screenshot/SeperateModules.jpg "Screenshot in vscode")
 ## Tiny 2020.02.16
 TO DO List
 1) ~~Seperate Programm Functions into different python modules~~
