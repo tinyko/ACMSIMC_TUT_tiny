@@ -32,7 +32,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
 * HOWTO
    * Open your favourite Terminal/Shell 
    * Change work path to a directory you like
-   * Run code below
+   * Run code below one-by-one
       ```Shell
       mkdir ACMSIM
       cd ACMSIM
@@ -96,7 +96,20 @@ TO DO List
 8) Save all **critical** data in trends
 9) Create ~~a speical~~ **HDF5** data file structure to contain data informations(timebase,timestamp,.etc) and values(bool,string,int,float,.etc)
 10) Remove all **redundant** code and cross-reference
-11) Seperate ODE-solver to a single module
+11) Seperate ODE-solver to a single module , Current Method is Runge-Kutta 5th order Method
+      * Methods
+         * Implicit(Explicit) Runge-Kutta Methods
+         * Adams–Bashforth methods
+         * Adams–Moulton methods
+         * Gear's Backward differentiation formulas (BDF)
+         * Euler Forawrd/Backward Method
+         * Kaps-Rentrop Methods / Rosenbrock methods
+         * Gauss-Jackson Method
+         * Predictor-Corrector Methods
+         * Relaxation Methods
+      * Issues
+         * Stiff problems
+         * Stability and convergence
 12) Decoupling sub-modules
 
 Done List
