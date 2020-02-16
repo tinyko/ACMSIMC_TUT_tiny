@@ -32,7 +32,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
 * HOWTO
    * Open your favourite Terminal/Shell 
    * Change work path to a directory you like
-   * Run code below one-by-one
+   * Run code below line-by-line
       ```Shell
       mkdir ACMSIM
       cd ACMSIM
