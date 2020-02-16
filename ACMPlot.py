@@ -39,7 +39,7 @@ def plot_it(ax, ylabel, d,time,font):
     ax.set_ylabel(ylabel, fontdict=font)
     # ax.set_xlim(0,35) # shared x
     # ax.set_ylim(0.85,1.45)
-def main():
+def draw_trend():
     # plot style
     style = np.random.choice(plt.style.available); print(style); plt.style.use('grayscale') # [u'dark_background', u'bmh', u'grayscale', u'ggplot', u'fivethirtyeight']
     # plot setting
@@ -80,8 +80,4 @@ def main():
                                         # (str(idx), df_profiles[key]),  
                                         ]),time,font)
     plt.show()
-    quit()
-
-if __name__ == "__main__": 
-    main() 
 
