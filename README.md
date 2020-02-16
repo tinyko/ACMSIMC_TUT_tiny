@@ -1,4 +1,4 @@
-## Tiny 2020.02.13
+## Tiny 2020.02.13(2020.02.16 updated)
 TO DO List
 1) ~~Seperate Programm Functions into different python modules~~
 2) GUI in QT (Auto Scale GUI, QT GUI layout)
@@ -8,7 +8,7 @@ TO DO List
 6) add json config file to manage parameters
 7) create a **Trend Viewer** to evaluate trends data , which could have some functions to calculate,zoom in/out,.etc(like IBA©analyzer)
 8) save all **critical** data in trends
-9) create a speical data file structure to contain data informations(timebase,timestamp,.etc) and values(bool,string,int,float,.etc)
+9) create ~~a speical~~~ **HDF5** data file structure to contain data informations(timebase,timestamp,.etc) and values(bool,string,int,float,.etc)
 
 Done List
 1) Converted C program into Python Single File "Alter"
