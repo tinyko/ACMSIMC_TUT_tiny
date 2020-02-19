@@ -312,10 +312,10 @@ class CTRL0():
             elif(self.theta_M < -np.pi):
                 self.theta_M += 2*np.pi # 反转！
 
-            # if VOLTAGE_CURRENT_DECOUPLING_CIRCUIT:
-            #     self.omega_sl = self.rreq*self.iTs / self.rotor_flux_cmd
-            # else:
-            self.omega_sl = self.rreq*self.iTs_cmd / self.rotor_flux_cmd
+            if VOLTAGE_CURRENT_DECOUPLING_CIRCUIT:
+                self.omega_sl = self.rreq*self.iTs / self.rotor_flux_cmd
+            else:
+                self.omega_sl = self.rreq*self.iTs_cmd / self.rotor_flux_cmd
 
             self.omega_syn = self.omg_fb + self.omega_sl
 

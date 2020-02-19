@@ -42,7 +42,7 @@ def main():
         # if CTRL.timebase>= 5.00275 :
         #     print('no')
         
-        IM.Tload = 5 * np.sign(IM.rpm) # No-load test
+        IM.Tload = 10 * np.sign(IM.rpm) # No-load test
         #print(IM.rpm)
         # ACM.Tload = ACM.Tem; // Blocked-rotor test
 
