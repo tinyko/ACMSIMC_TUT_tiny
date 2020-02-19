@@ -73,7 +73,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
    * Ramp
       * Linear Reference
       * S-curve
-      * 6th-Derivative-of-Position
+      * ~~6th-Derivative-of-Position~~
 * Stable And Transient Motor Model Analysis
 * AC-AC(DC-AC) converter Topology
    * Converter with DC-link
@@ -117,7 +117,4 @@ Done List
 2) ~~Modified ACMPlot as a library to Main Python Script~~
 3) ~~Compared LZ4 and Zstandard (Winner is LZ4! In Realtime scenanio)~~
 4) ~~numpy ndarray could be converted into bytes , vice versa~~
-6) **addition files**:
-   * **B-H_Cruve** : Draw B-H curve from 33.txt
-   * **LZ4-example** : Test LZ4 and Zstandard performance
-   * **ResultPrint** : Print result table in tabulate
+6) ~~Add a 6th-order speed ref curve~~
