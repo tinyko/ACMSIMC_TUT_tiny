@@ -61,7 +61,11 @@ def draw_trend():
 
     df_profiles = pd.read_csv(r"./algorithm.dat", na_values = ['1.#QNAN', '-1#INF00', '-1#IND00'])
     df_info = pd.read_csv(r"./info.dat", na_values = ['1.#QNAN', '-1#INF00', '-1#IND00'])
-
+    
+    # df_profiles["rpm_cmd"]=df_profiles["ACM.rpm_cmd"]
+    # df_profiles["rpm_mes"]=df_profiles["ACM.rpm_cmd"]-df_profiles["e_omega"]
+    print(df_profiles.keys())
+    
     no_samples = df_profiles.shape[0]
     no_traces  = df_profiles.shape[1]
     print(df_info, 'Simulated time: %g s.'%(no_samples * df_info['TS'].values[0] * df_info['DOWN_SAMPLE'].values[0]), 'Key list:', sep='\n')
@@ -71,8 +75,8 @@ def draw_trend():
     time = np.arange(1, no_samples+1) * df_info['DOWN_SAMPLE'].values[0] * df_info['TS'].values[0]
 
     ax_list = []
-    for i in range(0, no_traces, 6):
-        ax_list += list(get_axis((1,6)))
+    for i in range(0, no_traces, 2):
+        ax_list += list(get_axis((1,2)))
 
     for idx, key in enumerate(df_profiles.keys()):
         plot_it(ax_list[idx], key, O([
@@ -80,5 +84,6 @@ def draw_trend():
                                         # (str(idx), df_profiles[key]),  
                                         ]),time,font)
         #print(idx,key)
+    # ax_list[12].plot(time,df_profiles["rpm_mes"],color="red")
     plt.show()
 

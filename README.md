@@ -1,6 +1,8 @@
 # AC Induction Motor Simulation in Python
 ![Screenshot](./Screenshot/SeparateModules.jpg "Screenshot in vscode")
 
+![Screenshot](./Screenshot/6th-Spd-Ref.jpg "6th-Order Speed Reference")
+
 ## Introduction
 This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_motor">AC induction motor</a> in Python.
 
