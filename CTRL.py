@@ -1,6 +1,93 @@
 from Utils import * 
 import Macros as mc
 
+class s_curve():
+    def __init__(self):
+        self.init()
+    def init(self):
+        self.V_T=0.0
+        self.ACC=2
+        self.DEC=2
+        self.Start=True
+        self.dt=0.125 #micro second
+        self.Slow=False
+        self.F1=0.0
+        self.F2=0.0
+        self.F3=0.0
+        self.F4=0.0
+        self.F5=0.0
+        self.Target=0.0
+        self.Stat=0
+        self.V_O=0.0
+        self.LowV=2
+        self.Busy=False
+        self.acc=False
+        self.dec=True
+    def ref(self):
+        if (not self.Busy):
+            if (self.Slow and self.Start) :
+                self.Target=self.LowV
+                self.Stat=1
+            elif (not self.Start)  :
+                self.Target=0
+                self.Stat=2
+            else :
+                self.Target=self.V_T
+                self.Stat=0
+
+        if (( np.abs(self.V_O-self.Target) > 0.001) and (not self.Busy)) :
+            if (self.Target>self.V_O) :
+                h=self.dt/((self.Target-self.V_O)/60/self.ACC)/1000
+                acc=1
+            elif (self.Target<self.V_O) :
+                h=self.dt/((self.V_O-self.Target)/60/self.DEC)/1000
+                dec=1
+            h3=h*h*h
+            h4=h3*h
+            h5=h4*h
+            Initial=self.V_O
+            A=-6*Initial+6*self.Target
+            B=15*Initial-15*self.Target
+            C=-10*Initial+10*self.Target
+            self.F5=(121*A*h5)/16 + 5*B*h4 + (13*C*h3)/4
+            self.F4=(165*A*h5)/2 + 29*B*h4 + 9*C*h3
+            self.F3=255*A*h5 + 48*B*h4 + 6*C*h3
+            self.F2=300*A*h5 + 24*B*h4
+            self.F1=120*A*h5
+            self.Busy=True
+        elif (( np.abs(self.V_O-self.Target) > 0.001) and self.Busy) :
+            self.V_O=self.V_O+self.F5
+            self.F5=self.F5+self.F4
+            self.F4=self.F4+self.F3
+            self.F3=self.F3+self.F2
+            self.F2=self.F2+self.F1
+            if ((self.acc) and (self.V_O>=self.Target)) :
+                self.V_O=self.Target
+                self.Busy=False
+                self.acc=False
+            elif ((self.dec) and (self.V_O<=self.Target)) :
+                self.V_O=self.Target
+                self.Busy=False
+                self.dec=False
+        else:
+            self.V_O=self.Target
+            self.Busy=False
+            self.acc=False
+            self.dec=False
+    def speed_ref(self,timebase,IM):
+        if timebase>5.0 and timebase<=10.0:
+            self.V_T=100
+            self.ref()
+            tmp=self.V_O
+        elif timebase>10.0:
+            self.V_T=-100
+            self.ref()
+            tmp=self.V_O
+        else :
+            self.ref()
+            tmp=self.V_O
+        IM.rpm_cmd=tmp
+
 class PI_REG():
     def __init__(self):
         self.Kp=0.0
@@ -8,6 +95,7 @@ class PI_REG():
         self.Ki=0.0 # Ki = Kp/Ti*TS
         self.i_state=0.0
         self.i_limit=0.0
+
 class CTRL0():
     def __init__(self):
         self.vc_count = 0
@@ -104,8 +192,8 @@ class CTRL0():
         self.omega_sl = 0.0 
 
         # ver. IEMDC
-        self.pi_speed.Kp = 0.5  
-        self.pi_speed.Ti = 5 
+        self.pi_speed.Kp = 10  
+        self.pi_speed.Ti = 0.8
         self.pi_speed.Ki = (self.pi_speed.Kp*4.77) / self.pi_speed.Ti * (TS*VC_LOOP_CEILING*DOWN_FREQ_EXE_INVERSE) 
         self.pi_speed.i_state = 0.0 
         self.pi_speed.i_limit = 8 
@@ -119,8 +207,9 @@ class CTRL0():
         self.pi_iMs.i_limit = 350  #350.0  # unit: Volt
 
         self.pi_iTs.Kp = 15 
-        self.pi_iTs.Ti = 0.08 
+        self.pi_iTs.Ti = 0.08
         self.pi_iTs.Ki = self.pi_iTs.Kp/self.pi_iTs.Ti*TS 
+        # self.pi_iTs.Ki = 0.0
         self.pi_iTs.i_state = 0.0 
         self.pi_iTs.i_limit = 650  # unit: Volt, 350V->max 1300rpm
 

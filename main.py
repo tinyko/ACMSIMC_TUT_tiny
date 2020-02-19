@@ -1,5 +1,5 @@
 from ACM import ACIM
-from CTRL import CTRL0
+from CTRL import CTRL0,s_curve
 from Observer import Observer
 from Utils import *
 from FileIO import FileIO
@@ -17,6 +17,13 @@ def main():
     OB.acm_init(IM)
     OB.ob_init()
     CTRL.CTRL_INIT(IM)
+    sc=s_curve()
+
+    IM_items=vars(IM)
+    OB_items=vars(OB)
+    CTRL_items=vars(CTRL)
+
+    # print("{0}\n{1}\n{2}\n".format(IM_items,OB_items,CTRL_items))
 
     dfe=0 # dfe for down frequency execution
 
@@ -28,7 +35,9 @@ def main():
 
         # Command and Load Torque */
         # cmd_fast_speed_reversal(CTRL.timebase, 5, 5, 1500); // timebase, instant, interval, rpm_cmd
-        CTRL.cmd_fast_speed_reversal(5, 5, 100, IM) # timebase, instant, interval, rpm_cmd
+
+        # CTRL.cmd_fast_speed_reversal(5, 5, 100, IM) # timebase, instant, interval, rpm_cmd
+        sc.speed_ref(CTRL.timebase,IM)
         # ACM.Tload = 5 * sign(ACM.rpm); 
         # if CTRL.timebase>= 5.00275 :
         #     print('no')
@@ -52,8 +61,8 @@ def main():
 
             OB.observation(CTRL)
 
-            fio.write_data_to_file(f,IM)
-            
+            fio.write_data_to_file(f,IM,CTRL)
+             
             CTRL.control(IM.rpm_cmd, 0 ,OB,IM)
         
         IM.inverter_model(CTRL)

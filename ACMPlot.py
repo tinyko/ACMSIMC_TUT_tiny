@@ -79,5 +79,6 @@ def draw_trend():
                                         (str(idx), df_profiles[key]),  
                                         # (str(idx), df_profiles[key]),  
                                         ]),time,font)
+        #print(idx,key)
     plt.show()
 
