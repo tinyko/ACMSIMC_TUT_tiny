@@ -32,7 +32,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
    calculation of bezier </a>
    * reference 2:<a href="https://github.com/synthetos/TinyG/blob/master/firmware/tinyg/plan_exec.c"> Affordable Industrial Grade Motion Control https://github.com/synthetos/TinyG/wiki </a>
    * Smooth Jerk give a smooth motion control which usually used by elevator 
-   , servo controlllers , Robots ,.etc. (2nd Picture shown above , first line plot is **Speed Reference** , second one is **Speed Measurement**)
+   , servo controlllers , Robots ,.etc. (2nd Picture shown above)
 
 * Prerequisites
    * Python V3.8.1
