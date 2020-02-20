@@ -27,7 +27,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
       * **LZ4-example** : Test LZ4 and Zstandard performance
       * **ResultPrint** : Print result table in tabulate
 
-* 6th-Derv-Of-Position (for motion control)
+* 6th-Derivative-Of-Position (for motion control)
    * reference 1:<a href="https://www.drdobbs.com/forward-difference-calculation-of-bezier/184403417"> Forward differnece 
    calculation of bezier </a>
    * reference 2:<a href="https://github.com/synthetos/TinyG/blob/master/firmware/tinyg/plan_exec.c"> Affordable Industrial Grade Motion Control https://github.com/synthetos/TinyG/wiki </a>
