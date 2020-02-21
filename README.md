@@ -105,7 +105,7 @@ TO DO List
 8) Save all **critical** data in trends
 9) Create ~~a speical~~ **HDF5** data file structure to contain data informations(timebase,timestamp,.etc) and values(bool,string,int,float,.etc)
 10) Remove all **redundant** code and cross-reference
-11) Separate ODE-solver to a single module , Current Method is Runge-Kutta 5th order Method
+11) Separate ODE-solver to a single module , Current Method is Runge-Kutta 4th order Method
       * Methods
          * Implicit(Explicit) Runge-Kutta Methods
          * Adams–Bashforth methods
@@ -120,6 +120,9 @@ TO DO List
          * Stiff problems
          * Stability and convergence
 12) Decoupling sub-modules
+13) cProfile found out some slow code in main loop:
+![Screenshot](./Screenshot/cProfile.jpg "cProfile main.py")
+   2020-02-21 TODO :**optimize "machine simulation loop"**
 
 Done List
 1) ~~Converted C program into Python Single File "Alter"~~
