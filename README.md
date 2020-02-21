@@ -121,6 +121,9 @@ TO DO List
          * Stability and convergence
 12) Decoupling sub-modules
 13) cProfile found out some slow code in main loop:
+   ```Shell
+      cprofilev -f .\log.txt
+   ```
 ![Screenshot](./Screenshot/cProfile.jpg "cProfile main.py")
    2020-02-21 TODO :**optimize "machine simulation loop"**
 
