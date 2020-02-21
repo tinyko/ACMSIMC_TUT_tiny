@@ -64,7 +64,7 @@ def draw_trend():
     
     # df_profiles["rpm_cmd"]=df_profiles["ACM.rpm_cmd"]
     # df_profiles["rpm_mes"]=df_profiles["ACM.rpm_cmd"]-df_profiles["e_omega"]
-    print(df_profiles.keys())
+    #print(df_profiles.keys())
     
     no_samples = df_profiles.shape[0]
     no_traces  = df_profiles.shape[1]

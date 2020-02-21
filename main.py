@@ -5,11 +5,14 @@ from Utils import *
 from FileIO import FileIO
 import Macros as mc
 import ACMPlot
+import cProfile
+
 
 #Debug mode raise all runtime warning
 np.seterr(all='raise')
 
 def main():
+    # start_time=time.time()
     IM=ACIM()
     OB=Observer()
     CTRL=CTRL0()
@@ -30,7 +33,7 @@ def main():
     f=open(r'algorithm.dat','w')
     fio=FileIO()
     fio.write_header_to_file(f)
-
+    
     for _ in range(NUMBER_OF_LINES):
 
         # Command and Load Torque */
@@ -67,7 +70,7 @@ def main():
         
         IM.inverter_model(CTRL)
     f.close()
-
+    # print("Simulation time=",time.time()-start_time)
     ACMPlot.draw_trend()
 
 if __name__ == "__main__" :
