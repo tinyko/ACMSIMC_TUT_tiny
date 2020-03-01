@@ -5,7 +5,8 @@ from mpl_toolkits.axes_grid1.inset_locator import mark_inset
 # from pprint import pprint
 from collections import OrderedDict as O
 import pandas as pd
-
+import matplotlib
+matplotlib.use("QT5Agg")
 
 ######################
 # Plotting
@@ -85,5 +86,7 @@ def draw_trend():
                                         ]),time,font)
         #print(idx,key)
     # ax_list[12].plot(time,df_profiles["rpm_mes"],color="red")
+    # fm=plt.get_current_fig_manager()
+    # fm.window.showMaximized()
     plt.show()
 

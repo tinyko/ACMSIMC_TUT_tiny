@@ -68,6 +68,8 @@ class ACIM():
         
         self.RAD_PER_SEC_2_RPM=0.0
         self.RPM_2_RAD_PER_SEC=0.0
+
+        # self.zs5=np.zeros(5)
         
     def Machine_init(self):
         self.db=[]
@@ -134,7 +136,7 @@ class ACIM():
         self.izq = self.x[1]/self.Lls + self.x[3]/self.Llr 
         self.izd = self.x[0]/self.Lls + self.x[2]/self.Llr
         
-        self.iz = np.sqrt(self.izd*self.izd + self.izq*self.izq)
+        self.iz = np.sqrt(self.izd**2 + self.izq**2)
 
         if self.iz>1e-8:
             if SATURATED_MAGNETIC_CIRCUIT:
@@ -189,12 +191,12 @@ class ACIM():
         fx[4] = (self.Tem - self.Tload)*self.mu_m 
     
     def rK555_Sat(self,t, x, hs):
-        k1=np.zeros(5)
-        k2=np.zeros(5)
-        k3=np.zeros(5)
-        k4=np.zeros(5)
-        xk=np.zeros(5)
-        fx=np.zeros(5)
+        k1=[0,0,0,0,0]
+        k2=[0,0,0,0,0]
+        k3=[0,0,0,0,0]
+        k4=[0,0,0,0,0]
+        xk=[0,0,0,0,0]
+        fx=[0,0,0,0,0]
 
         self.rK5_satDynamics(t, x, fx)  # timer.t,
         for i in range(5):    
