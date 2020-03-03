@@ -137,7 +137,9 @@ TO DO List
 ```
 
 ![Screenshot](./Screenshot/cProfile.jpg "cProfile main.py")
-2020-02-21 TODO :**optimize "machine simulation loop"**
+
+~~2020-02-21 TODO :**optimize "machine simulation loop"**~~
+![Screenshot](./Screenshot/cProfile_improved.jpg "cProfile improved")
 
 Done List
 
@@ -146,3 +148,4 @@ Done List
 3. ~~Compared LZ4 and Zstandard (Winner is LZ4! In Realtime scenanio)~~
 4. ~~numpy ndarray could be converted into bytes , vice versa~~
 5. ~~Add a 6th-order speed ref curve~~
+6. ~~Add \__slot__ to Class object~~
