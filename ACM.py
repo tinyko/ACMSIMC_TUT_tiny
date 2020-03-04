@@ -1,4 +1,5 @@
 from Utils import *
+from ctypes import *
 
 _Vce0 = 1.8  # V
 _Vd0 = 1.3  # V
@@ -62,70 +63,82 @@ class ACIM(object):
         "dist_be",
         "RAD_PER_SEC_2_RPM",
         "RPM_2_RAD_PER_SEC",
+        "satLUT",
+        "satLST",
+        "libc",
     )
 
     def __init__(self):
-        self.ial = 0.0  # Current Alpha Component
-        self.ibe = 0.0  # Current Beta Component
-        self.psi_al = 0.0  #
-        self.psi_be = 0.0  #
-        self.ual = 0.0  # Voltage Alpha Component
-        self.ube = 0.0  # Voltage Beta Component
+        # self.ial = 0.0  # Current Alpha Component
+        # self.ibe = 0.0  # Current Beta Component
+        # self.psi_al = 0.0  #
+        # self.psi_be = 0.0  #
+        # self.ual = 0.0  # Voltage Alpha Component
+        # self.ube = 0.0  # Voltage Beta Component
 
-        self.x = np.zeros(10)  # Motor Status
-        self.rpm = 0.0  # revolutions per minute
-        self.rpm_cmd = 0.0  # speed command
-        self.rpm_deriv_cmd = 0.0  # derivative of speed command
-        self.Tload = 0.0  # Load Torque
-        self.Tem = 0.0  # Electrical Torque
+        # # self.x = [0.0, 0.0, 0.0, 0.0, 0.0]
+        # self.x0 = 0.0
+        # self.x1 = 0.0
+        # self.x2 = 0.0
+        # self.x3 = 0.0
+        # self.x4 = 0.0  # Motor Status
+        # self.rpm = 0.0  # revolutions per minute
+        # self.rpm_cmd = 0.0  # speed command
+        # self.rpm_deriv_cmd = 0.0  # derivative of speed command
+        # self.Tload = 0.0  # Load Torque
+        # self.Tem = 0.0  # Electrical Torque
 
-        self.Js = 0.0  # moment of inertia
-        self.npp = 0.0  # number of pole pairs
-        self.mu_m = 0.0  # =npp/Js
-        self.Ts = 0.0  # sampling time
+        # self.Js = 0.0  # moment of inertia
+        # self.npp = 0.0  # number of pole pairs
+        # self.mu_m = 0.0  # =npp/Js
+        # self.Ts = 0.0  # sampling time
 
-        self.Lsigma = 0.0  # Leakage induction
-        self.rs = 0.0  # stator resistance
-        self.rreq = 0.0  # equivalent rotor resistance
-        self.Lmu = 0.0  # magnetic induction
-        self.Lmu_inv = 0.0  # inverse of Lmu
-        self.alpha = 0.0  # inverse of rotor time constant = Lmu/Lr
+        # self.Lsigma = 0.0  # Leakage induction
+        # self.rs = 0.0  # stator resistance
+        # self.rreq = 0.0  # equivalent rotor resistance
+        # self.Lmu = 0.0  # magnetic induction
+        # self.Lmu_inv = 0.0  # inverse of Lmu
+        # self.alpha = 0.0  # inverse of rotor time constant = Lmu/Lr
 
-        self.Lm = 0.0  # mutual induction
-        self.rr = 0.0  # rotor resistance
-        self.Lls = 0.0  # stator leakage induction
-        self.Llr = 0.0  # rotor leakage induction
-        self.Lm_slash_Lr = 0.0
-        self.Lr_slash_Lm = 0.0
+        # self.Lm = 0.0  # mutual induction
+        # self.rr = 0.0  # rotor resistance
+        # self.Lls = 0.0  # stator leakage induction
+        # self.Llr = 0.0  # rotor leakage induction
+        # self.Lm_slash_Lr = 0.0
+        # self.Lr_slash_Lm = 0.0
 
-        self.LSigmal = 0.0
+        # self.LSigmal = 0.0
 
-        self.izq = 0.0
-        self.izd = 0.0
-        self.iz = 0.0
+        # self.izq = 0.0
+        # self.izd = 0.0
+        # self.iz = 0.0
 
-        self.psimq = 0.0
-        self.psimd = 0.0
-        self.psim = 0.0
-        self.im = 0.0
+        # self.psimq = 0.0
+        # self.psimd = 0.0
+        # self.psim = 0.0
+        # self.im = 0.0
 
-        self.iqs = 0.0
-        self.ids = 0.0
-        self.iqr = 0.0
-        self.idr = 0.0
+        # self.iqs = 0.0
+        # self.ids = 0.0
+        # self.iqr = 0.0
+        # self.idr = 0.0
 
-        self.ual_c_dist = 0.0
-        self.ube_c_dist = 0.0
-        self.dist_al = 0.0
-        self.dist_be = 0.0
+        # self.ual_c_dist = 0.0
+        # self.ube_c_dist = 0.0
+        # self.dist_al = 0.0
+        # self.dist_be = 0.0
 
-        self.RAD_PER_SEC_2_RPM = 0.0
-        self.RPM_2_RAD_PER_SEC = 0.0
+        # self.RAD_PER_SEC_2_RPM = 0.0
+        # self.RPM_2_RAD_PER_SEC = 0.0
+        self.Machine_init()
 
     def Machine_init(self):
-        self.db = []
-        for i in range(5):
-            self.x[i] = 0.0
+        # self.db = []
+        self.x0 = 0.0
+        self.x1 = 0.0
+        self.x2 = 0.0
+        self.x3 = 0.0
+        self.x4 = 0.0
         self.rpm = 0.0
         self.rpm_cmd = 0.0
         self.rpm_deriv_cmd = 0.0
@@ -184,35 +197,40 @@ class ACIM(object):
         self.psimd = 0.0
 
         self.satLUT = np.array(pd.read_csv(r"33.txt", header=None))
+        self.satLST = (c_float * len(self.satLUT))(*self.satLUT)
+        self.libc = cdll.LoadLibrary("./libsatlut.so")
+        self.libc.sat_lookup.argtypes = [c_double, POINTER(c_float)]
+        self.libc.sat_lookup.restype = c_float
+
         self.RAD_PER_SEC_2_RPM = 60.0 / (2 * np.pi * self.npp)
         self.RPM_2_RAD_PER_SEC = (2 * np.pi * self.npp) / 60.0
 
-    def sat_lookup(self, iz, satLUT):
-        if iz >= (444000) * IZ_STEP:
-            idx = 444000
-            return (
-                (iz - idx * IZ_STEP)
-                * IZ_STEP_INV
-                * (satLUT[idx + 1][0] - satLUT[idx][0])
-                + satLUT[idx][0]
-            )  # 一阶插值？
-        # return satLUT[(int)(iz/IZ_STEP+0.5)]  # This yields bad results with obvious oscillation (voltages and currents)
-        idx = int(iz * IZ_STEP_INV)
-        return (
-            (iz - idx * IZ_STEP) * IZ_STEP_INV * (satLUT[idx + 1][0] - satLUT[idx][0])
-            + satLUT[idx][0]
-        )  # 一阶插值？
+    # def sat_lookup(self, iz, satLUT):
+    #     if iz >= (444000) * IZ_STEP:
+    #         idx = 444000
+    #         return (
+    #             (iz - idx * IZ_STEP)
+    #             * IZ_STEP_INV
+    #             * (satLUT[idx + 1][0] - satLUT[idx][0])
+    #             + satLUT[idx][0]
+    #         )  # 一阶插值？
+    #     # return satLUT[(int)(iz/IZ_STEP+0.5)]  # This yields bad results with obvious oscillation (voltages and currents)
+    #     idx = int(iz * IZ_STEP_INV)
+    #     return (
+    #         (iz - idx * IZ_STEP) * IZ_STEP_INV * (satLUT[idx + 1][0] - satLUT[idx][0])
+    #         + satLUT[idx][0]
+    #     )  # 一阶插值？
 
     def collectCurrents(self):
         # Generalised Current by Therrien2013
-        self.izq = self.x[1] / self.Lls + self.x[3] / self.Llr
-        self.izd = self.x[0] / self.Lls + self.x[2] / self.Llr
+        self.izq = self.x1 / self.Lls + self.x3 / self.Llr
+        self.izd = self.x0 / self.Lls + self.x2 / self.Llr
 
         self.iz = np.sqrt(self.izd ** 2 + self.izq ** 2)
 
         if self.iz > 1e-8:
             if SATURATED_MAGNETIC_CIRCUIT:
-                self.psim = self.sat_lookup(self.iz, self.satLUT)
+                self.psim = self.libc.sat_lookup(self.iz, self.satLST)
                 self.im = self.iz - self.psim / self.LSigmal
                 self.Lm = self.psim / self.im
                 self.Lmu = self.Lm * self.Lm / (self.Lm + self.Llr)
@@ -233,15 +251,15 @@ class ACIM(object):
                 print("how to handle zero iz?\n")
             self.psimq = 0.0
             self.psimd = 0.0
-        self.iqs = (self.x[1] - self.psimq) / self.Lls
-        self.ids = (self.x[0] - self.psimd) / self.Lls
-        self.iqr = (self.x[3] - self.psimq) / self.Llr
-        self.idr = (self.x[2] - self.psimd) / self.Llr
+        self.iqs = (self.x1 - self.psimq) / self.Lls
+        self.ids = (self.x0 - self.psimd) / self.Lls
+        self.iqr = (self.x3 - self.psimq) / self.Llr
+        self.idr = (self.x2 - self.psimd) / self.Llr
         # # Direct compute is ir from psis psir */
-        # self.iqs = (self.x[1] - (self.Lm/(self.Lm+self.Llr))*self.x[3])/self.Lsigma
-        # self.ids = (self.x[0] - (self.Lm/(self.Lm+self.Llr))*self.x[2])/self.Lsigma
-        # self.iqr = (self.x[3] - (self.Lm/(self.Lm+self.Lls))*self.x[1])/(self.Lm+self.Llr-self.Lm*self.Lm/(self.Lm+self.Lls))
-        # self.idr = (self.x[2] - (self.Lm/(self.Lm+self.Lls))*self.x[0])/(self.Lm+self.Llr-self.Lm*self.Lm/(self.Lm+self.Lls))
+        # self.iqs = (self.x1 - (self.Lm/(self.Lm+self.Llr))*self.x3)/self.Lsigma
+        # self.ids = (self.x0 - (self.Lm/(self.Lm+self.Llr))*self.x2)/self.Lsigma
+        # self.iqr = (self.x3 - (self.Lm/(self.Lm+self.Lls))*self.x1)/(self.Lm+self.Llr-self.Lm*self.Lm/(self.Lm+self.Lls))
+        # self.idr = (self.x2 - (self.Lm/(self.Lm+self.Lls))*self.x0)/(self.Lm+self.Llr-self.Lm*self.Lm/(self.Lm+self.Lls))
 
     def rK5_satDynamics(self, t, x, fx):
         # argument t is omitted*/
@@ -260,7 +278,7 @@ class ACIM(object):
         fx[2] = -self.rr * self.idr - x[4] * x[3]
 
         # STEP THREE: mechanical model */
-        # self.Tem = self.npp*(self.Lm/(self.Lm+self.Llr))*(self.iqs*self.x[2]-self.ids*self.x[3])  # this is not better
+        # self.Tem = self.npp*(self.Lm/(self.Lm+self.Llr))*(self.iqs*self.x2-self.ids*self.x3)  # this is not better
         self.Tem = self.npp * (self.iqs * x[0] - self.ids * x[1])
         fx[4] = (self.Tem - self.Tload) * self.mu_m
 
@@ -273,88 +291,40 @@ class ACIM(object):
         fx = [0, 0, 0, 0, 0]
 
         self.rK5_satDynamics(t, x, fx)  # timer.t,
-        for i in range(5):
-            k1[i] = fx[i] * hs
-            xk[i] = x[i] + k1[i] * 0.5
+        # for i in range(5):
+        k1 = [fx[i] * hs for i in range(5)]
+        xk = [x[i] + k1[i] * 0.5 for i in range(5)]
 
         self.rK5_satDynamics(t, xk, fx)  # timer.t+hs/2.,
-        for i in range(5):
-            k2[i] = fx[i] * hs
-            xk[i] = x[i] + k2[i] * 0.5
+        # for i in range(5):
+        k2 = [fx[i] * hs for i in range(5)]
+        xk = [x[i] + k2[i] * 0.5 for i in range(5)]
 
         self.rK5_satDynamics(t, xk, fx)  # timer.t+hs/2.,
-        for i in range(5):
-            k3[i] = fx[i] * hs
-            xk[i] = x[i] + k3[i]
+        # for i in range(5):
+        k3 = [fx[i] * hs for i in range(5)]
+        xk = [x[i] + k3[i] for i in range(5)]
 
         self.rK5_satDynamics(t, xk, fx)  # timer.t+hs,
-        for i in range(5):
-            k4[i] = fx[i] * hs
-            x[i] = x[i] + (k1[i] + 2 * (k2[i] + k3[i]) + k4[i]) * one_over_six
+        k4 = [fx[i] * hs for i in range(5)]
+        tmp = [
+            x[i] + (k1[i] + 2 * (k2[i] + k3[i]) + k4[i]) * one_over_six
+            for i in range(5)
+        ]
+        self.x0, self.x1, self.x2, self.x3, self.x4 = tmp
         self.collectCurrents()
 
-    def rK5_dynamics(self, t, x, fx):
-        if MACHINE_TYPE == INDUCTION_MACHINE:
-            # electromagnetic model
-            fx[2] = self.rreq * x[0] - self.alpha * x[2] - x[4] * x[3]  # flux-alpha
-            fx[3] = self.rreq * x[1] - self.alpha * x[3] + x[4] * x[2]  # flux-beta
-            fx[0] = (self.ual - self.rs * x[0] - fx[2]) / self.Lsigma  # current-alpha
-            fx[1] = (self.ube - self.rs * x[1] - fx[3]) / self.Lsigma  # current-beta
+    def machine_simulation(self, timebase):
+        x = [self.x0, self.x1, self.x2, self.x3, self.x4]
+        self.rK555_Sat(timebase, x, self.Ts)
+        self.ial = self.ids  # rK555_Sat
+        self.ibe = self.iqs  # rK555_Sat
+        self.psi_al = self.x2 * self.Lm_slash_Lr  # rK555_Sat
+        self.psi_be = self.x3 * self.Lm_slash_Lr  # rK555_Sat
 
-            # mechanical model
-            self.Tem = self.npp * (x[1] * x[2] - x[0] * x[3])
-            fx[4] = (self.Tem - self.Tload) * self.mu_m  # elec. angular rotor speed
-            # fx[5] = x[4]                            # elec. angular rotor position
+        self.rpm = self.x4 * 60 / (2 * np.pi * self.npp)
 
-    def rK555_Lin(self, t, x, hs):
-        if MACHINE_TYPE == INDUCTION_MACHINE:
-            NUMBER_OF_STATES = 6
-        NS = NUMBER_OF_STATES
-        k1 = np.zeros(NS)
-        k2 = np.zeros(NS)
-        k3 = np.zeros(NS)
-        k4 = np.zeros(NS)
-        xk = np.zeros(NS)
-        fx = np.zeros(NS)
-
-        self.rK5_dynamics(t, x, fx)  # timer.t,
-        for i in range(NS):
-            k1[i] = fx[i] * hs
-            xk[i] = x[i] + k1[i] * 0.5
-
-        self.rK5_dynamics(t, xk, fx)  # timer.t+hs/2.,
-        for i in range(NS):
-            k2[i] = fx[i] * hs
-            xk[i] = x[i] + k2[i] * 0.5
-
-        self.rK5_dynamics(t, xk, fx)  # timer.t+hs/2.,
-        for i in range(NS):
-            k3[i] = fx[i] * hs
-            xk[i] = x[i] + k3[i]
-
-        self.rK5_dynamics(t, xk, fx)  # timer.t+hs,
-        for i in range(NS):
-            k4[i] = fx[i] * hs
-            x[i] = x[i] + (k1[i] + 2 * (k2[i] + k3[i]) + k4[i]) / 6.0
-
-    def machine_simulation(self, CTRL):
-        # API for explicit access
-        if MACHINE_TYPE == INDUCTION_MACHINE:
-            # self.rK555_Lin(CTRL.timebase, self.x, self.Ts)
-            # self.ial    = self.x[0]  # rK555_Lin
-            # self.ibe    = self.x[1]  # rK555_Lin
-            # self.psi_al = self.x[2]  # rK555_Lin
-            # self.psi_be = self.x[3]  # rK555_Lin
-
-            self.rK555_Sat(CTRL.timebase, self.x, self.Ts)
-            self.ial = self.ids  # rK555_Sat
-            self.ibe = self.iqs  # rK555_Sat
-            self.psi_al = self.x[2] * self.Lm_slash_Lr  # rK555_Sat
-            self.psi_be = self.x[3] * self.Lm_slash_Lr  # rK555_Sat
-
-            self.rpm = self.x[4] * 60 / (2 * np.pi * self.npp)
-
-        if self.rpm != np.nan:
+        if type(self.rpm) != np.nan:
             return False
         else:
             print("self.rpm is {0}\n", self.rpm)

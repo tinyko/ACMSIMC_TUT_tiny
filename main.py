@@ -3,9 +3,11 @@ from CTRL import CTRL0, s_curve
 from Observer import Observer
 from Utils import *
 from FileIO import FileIO
-import Macros as mc
+
+# import Macros as mc
 import ACMPlot
-import cProfile
+
+# import cProfile
 
 # Debug mode raise all runtime warning
 np.seterr(all="raise")
@@ -14,14 +16,14 @@ np.seterr(all="raise")
 def main():
     start_time = time.time()
     IM = ACIM()
-    OB = Observer()
-    CTRL = CTRL0()
+    OB = Observer(IM)
+    CTRL = CTRL0(IM)
     sc = s_curve()
 
-    IM.Machine_init()
-    OB.acm_init(IM)
-    OB.ob_init()
-    CTRL.CTRL_INIT(IM)
+    # IM.Machine_init()
+    # OB.acm_init(IM)
+    # OB.ob_init()
+    # CTRL.CTRL_INIT(IM)
     # IM_items=vars(IM)
     # OB_items=vars(OB)
     # CTRL_items=vars(CTRL)
@@ -48,7 +50,7 @@ def main():
         # ACM.Tload = ACM.Tem; // Blocked-rotor test
 
         # Simulated ACM */
-        if IM.machine_simulation(CTRL):
+        if IM.machine_simulation(CTRL.timebase):
             print("Break the loop.\n")
             break
         dfe += 1
@@ -67,9 +69,10 @@ def main():
             CTRL.control(IM.rpm_cmd, 0, OB, IM)
 
         IM.inverter_model(CTRL)
-    f.close()
     print("Simulation time=", time.time() - start_time)
-    ACMPlot.draw_trend()
+    f.close()
+
+    # ACMPlot.draw_trend()
 
 
 if __name__ == "__main__":

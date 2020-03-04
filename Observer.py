@@ -82,27 +82,29 @@ class Observer(object):
         "im",
     )
 
-    def __init__(self):
-        self.Js = 0.0
-        self.Js_inv = 0.0
+    def __init__(self, IM):
+        # self.Js = 0.0
+        # self.Js_inv = 0.0
 
-        self.rs = 0.0
-        self.rreq = 0.0
+        # self.rs = 0.0
+        # self.rreq = 0.0
 
-        self.alpha = 0.0
-        self.Lsigma = 0.0
-        self.Lsigma_inv = 0.0
-        self.Lmu = 0.0
-        self.Lmu_inv = 0.0
+        # self.alpha = 0.0
+        # self.Lsigma = 0.0
+        # self.Lsigma_inv = 0.0
+        # self.Lmu = 0.0
+        # self.Lmu_inv = 0.0
 
-        self.npp = 0.0
-        self.omg = 0.0
+        # self.npp = 0.0
+        # self.omg = 0.0
 
-        self.psi_mu_al = 0.0
-        self.psi_mu_be = 0.0
+        # self.psi_mu_al = 0.0
+        # self.psi_mu_be = 0.0
 
         self.tajima = Tajima()
         self.im = InductionMachine()
+        self.acm_init(IM)
+        self.ob_init()
 
     def acm_init(self, IM):
         self.im.u_s = self.im.zeros
@@ -154,8 +156,8 @@ class Observer(object):
         if MACHINE_TYPE == INDUCTION_MACHINE:
             self.im.is_curr[0] = IM.ial
             self.im.is_curr[1] = IM.ibe
-            self.im.omg = IM.x[4]
-            self.im.theta_r = IM.x[5]
+            self.im.omg = IM.x4
+            # self.im.theta_r = IM.x5
 
     def observation(self, CTRL):
         rotor_flux_cmd = CTRL.rotor_flux_cmd

@@ -165,56 +165,56 @@ class CTRL0(object):
         "pi_iTs",
     )
 
-    def __init__(self):
-        self.vc_count = 0
+    def __init__(self, IM):
+        # self.vc_count = 0
 
-        self.timebase = 0.0
+        # self.timebase = 0.0
 
-        self.ual = 0.0
-        self.ube = 0.0
+        # self.ual = 0.0
+        # self.ube = 0.0
 
-        self.rs = 0.0
-        self.rreq = 0.0
-        self.Lsigma = 0.0
-        self.alpha = 0.0
-        self.Lmu = 0.0
-        self.Lmu_inv = 0.0
+        # self.rs = 0.0
+        # self.rreq = 0.0
+        # self.Lsigma = 0.0
+        # self.alpha = 0.0
+        # self.Lmu = 0.0
+        # self.Lmu_inv = 0.0
 
-        self.Tload = 0.0
-        self.rpm_cmd = 0.0
+        # self.Tload = 0.0
+        # self.rpm_cmd = 0.0
 
-        self.Js = 0.0
-        self.Js_inv = 0.0
+        # self.Js = 0.0
+        # self.Js_inv = 0.0
 
-        self.omg_fb = 0.0
-        self.ial_fb = 0.0
-        self.ibe_fb = 0.0
-        self.psi_mu_al_fb = 0.0
-        self.psi_mu_be_fb = 0.0
+        # self.omg_fb = 0.0
+        # self.ial_fb = 0.0
+        # self.ibe_fb = 0.0
+        # self.psi_mu_al_fb = 0.0
+        # self.psi_mu_be_fb = 0.0
 
-        self.rotor_flux_cmd = 0.0
+        # self.rotor_flux_cmd = 0.0
 
-        self.omg_ctrl_err = 0.0
-        self.speed_ctrl_err = 0.0
+        # self.omg_ctrl_err = 0.0
+        # self.speed_ctrl_err = 0.0
 
         self.iMs = 0.0
         self.iTs = 0.0
 
-        self.theta_M = 0.0
-        self.cosT = 0.0
-        self.sinT = 0.0
+        # self.theta_M = 0.0
+        # self.cosT = 0.0
+        # self.sinT = 0.0
 
-        self.omega_syn = 0.0
-        self.omega_sl = 0.0
+        # self.omega_syn = 0.0
+        # self.omega_sl = 0.0
 
-        self.uMs_cmd = 0.0
-        self.uTs_cmd = 0.0
-        self.iMs_cmd = 0.0
-        self.iTs_cmd = 0.0
-
+        # self.uMs_cmd = 0.0
+        # self.uTs_cmd = 0.0
+        # self.iMs_cmd = 0.0
+        # self.iTs_cmd = 0.0
         self.pi_speed = PI_REG()
         self.pi_iMs = PI_REG()
         self.pi_iTs = PI_REG()
+        self.CTRL_INIT(IM)
 
     def CTRL_INIT(self, IM):
         # int i=0,j=0
