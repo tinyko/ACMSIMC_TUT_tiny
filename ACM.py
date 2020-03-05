@@ -212,9 +212,9 @@ class ACIM(object):
         self.psimd = 0.0
 
         self.ao_out = args_out()
-        self.librk5 = cdll.LoadLibrary("./rk5/librk5.so")
-        self.librk5.rK555_Sat.argtypes = [args_in]
-        self.librk5.rK555_Sat.restype = args_out
+        self.librk4 = cdll.LoadLibrary("./rk4/librk4.so")
+        self.librk4.rK4_Sat.argtypes = [args_in]
+        self.librk4.rK4_Sat.restype = args_out
         self.ai_in = args_in()
         self.ao_out = args_out()
         self.RAD_PER_SEC_2_RPM = 60.0 / (2 * np.pi * self.npp)
@@ -284,7 +284,7 @@ class ACIM(object):
     def machine_simulation(self, timebase):
         self.timebase = timebase
         self.copy_vars_to_in()
-        self.ao_out = self.librk5.rK555_Sat(self.ai_in)
+        self.ao_out = self.librk4.rK4_Sat(self.ai_in)
         self.copy_vars_from_out()
         self.ial = self.ids  # rK555_Sat
         self.ibe = self.iqs  # rK555_Sat

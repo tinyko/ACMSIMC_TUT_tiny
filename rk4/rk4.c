@@ -1,4 +1,4 @@
-#include "rk5.h"
+#include "rk4.h"
 
 struct args_in ai;
 struct args_out ao;
@@ -45,7 +45,7 @@ int collectCurrents()
     ai.idr = (ai.x2 - psimd) / ai.Llr;
 }
 
-int rK5_satDynamics(double t, double x[], double fx[])
+int rK4_satDynamics(double t, double x[], double fx[])
 {
     collectCurrents();
 
@@ -92,7 +92,7 @@ int copy_args_out()
     ao.Lm_slash_Lr = ai.Lm_slash_Lr; //IO
 }
 
-struct args_out rK555_Sat(struct args_in ai_in)
+struct args_out rK4_Sat(struct args_in ai_in)
 {
     ai = ai_in;
     int i;
@@ -101,28 +101,28 @@ struct args_out rK555_Sat(struct args_in ai_in)
     double k1[5], k2[5], k3[5], k4[5], xk[5], fx[5] = {0};
     double x[] = {ai.x0, ai.x1, ai.x2, ai.x3, ai.x4};
 
-    rK5_satDynamics(t, x, fx); //# timer.t,
+    rK4_satDynamics(t, x, fx); //# timer.t,
     for (i = 0; i < 5; i++)
     {
         k1[i] = fx[i] * hs;
         xk[i] = x[i] + k1[i] * 0.5;
     }
 
-    rK5_satDynamics(t, xk, fx); //# timer.t+hs/2.,
+    rK4_satDynamics(t, xk, fx); //# timer.t+hs/2.,
     for (i = 0; i < 5; i++)
     {
         k2[i] = fx[i] * hs;
         xk[i] = x[i] + k2[i] * 0.5;
     }
 
-    rK5_satDynamics(t, xk, fx); //# timer.t+hs/2.,
+    rK4_satDynamics(t, xk, fx); //# timer.t+hs/2.,
     for (i = 0; i < 5; i++)
     {
         k3[i] = fx[i] * hs;
         xk[i] = x[i] + k3[i];
     }
 
-    rK5_satDynamics(t, xk, fx); //# timer.t+hs,
+    rK4_satDynamics(t, xk, fx); //# timer.t+hs,
     for (i = 0; i < 5; i++)
     {
         k4[i] = fx[i] * hs;

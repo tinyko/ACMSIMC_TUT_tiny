@@ -71,6 +71,6 @@ struct args_out
 };
 
 int collectCurrent();
-int rK5_satDynamics(double t, double x[], double fx[]);
-struct args_out rK555_Sat(struct args_in ai);
+int rK4_satDynamics(double t, double x[], double fx[]);
+struct args_out rK4_Sat(struct args_in ai);
 int copy_args_out();
