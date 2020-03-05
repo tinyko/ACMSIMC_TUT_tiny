@@ -15,6 +15,73 @@ Rce = 0.04958
 Rdiode = 0.05618
 
 
+class args_out(Structure):
+    _fields_ = [
+        ("x0", c_double),
+        ("x1", c_double),
+        ("x2", c_double),
+        ("x3", c_double),
+        ("x4", c_double),
+        ("iqs", c_double),
+        ("ids", c_double),
+        ("iqr", c_double),
+        ("idr", c_double),
+        ("Tem", c_double),
+        ("izq", c_double),
+        ("izd", c_double),
+        ("iz", c_double),
+        ("psim", c_double),
+        ("Lm", c_double),
+        ("LSigmal", c_double),
+        ("Lmu", c_double),
+        ("Lmu_inv", c_double),
+        ("alpha", c_double),
+        ("rreq", c_double),
+        ("Lsigma", c_double),
+        ("Lm_slash_Lr", c_double),
+        ("Lr_slash_Lm", c_double),
+    ]
+
+
+class args_in(Structure):
+    _fields_ = [
+        ("Llr", c_double),
+        ("Lls", c_double),
+        ("timebase", c_double),
+        ("Ts", c_double),
+        ("ube", c_double),
+        ("ual", c_double),
+        ("rs", c_double),
+        ("rr", c_double),
+        ("npp", c_double),
+        ("Tload", c_double),
+        ("mu_m", c_double),
+        ("x0", c_double),
+        ("x1", c_double),
+        ("x2", c_double),
+        ("x3", c_double),
+        ("x4", c_double),
+        ("iqs", c_double),
+        ("ids", c_double),
+        ("iqr", c_double),
+        ("idr", c_double),
+        ("Tem", c_double),
+        ("izq", c_double),
+        ("izd", c_double),
+        ("iz", c_double),
+        ("psim", c_double),
+        ("Lm", c_double),
+        ("LSigmal", c_double),
+        ("Lmu", c_double),
+        ("Lmu_inv", c_double),
+        ("alpha", c_double),
+        ("rreq", c_double),
+        ("Lsigma", c_double),
+        ("Lm_slash_Lr", c_double),
+        ("Lr_slash_Lm", c_double),
+    ]
+
+
 class ACIM(object):
     __slot__ = (
         "ial",  # alpha current
@@ -73,67 +140,6 @@ class ACIM(object):
     )
 
     def __init__(self):
-        # self.ial = 0.0  # Current Alpha Component
-        # self.ibe = 0.0  # Current Beta Component
-        # self.psi_al = 0.0  #
-        # self.psi_be = 0.0  #
-        # self.ual = 0.0  # Voltage Alpha Component
-        # self.ube = 0.0  # Voltage Beta Component
-
-        # # self.x = [0.0, 0.0, 0.0, 0.0, 0.0]
-        # self.x0 = 0.0
-        # self.x1 = 0.0
-        # self.x2 = 0.0
-        # self.x3 = 0.0
-        # self.x4 = 0.0  # Motor Status
-        # self.rpm = 0.0  # revolutions per minute
-        # self.rpm_cmd = 0.0  # speed command
-        # self.rpm_deriv_cmd = 0.0  # derivative of speed command
-        # self.Tload = 0.0  # Load Torque
-        # self.Tem = 0.0  # Electrical Torque
-
-        # self.Js = 0.0  # moment of inertia
-        # self.npp = 0.0  # number of pole pairs
-        # self.mu_m = 0.0  # =npp/Js
-        # self.Ts = 0.0  # sampling time
-
-        # self.Lsigma = 0.0  # Leakage induction
-        # self.rs = 0.0  # stator resistance
-        # self.rreq = 0.0  # equivalent rotor resistance
-        # self.Lmu = 0.0  # magnetic induction
-        # self.Lmu_inv = 0.0  # inverse of Lmu
-        # self.alpha = 0.0  # inverse of rotor time constant = Lmu/Lr
-
-        # self.Lm = 0.0  # mutual induction
-        # self.rr = 0.0  # rotor resistance
-        # self.Lls = 0.0  # stator leakage induction
-        # self.Llr = 0.0  # rotor leakage induction
-        # self.Lm_slash_Lr = 0.0
-        # self.Lr_slash_Lm = 0.0
-
-        # self.LSigmal = 0.0
-
-        # self.izq = 0.0
-        # self.izd = 0.0
-        # self.iz = 0.0
-
-        # self.psimq = 0.0
-        # self.psimd = 0.0
-        # self.psim = 0.0
-        # self.im = 0.0
-
-        # self.iqs = 0.0
-        # self.ids = 0.0
-        # self.iqr = 0.0
-        # self.idr = 0.0
-
-        # self.ual_c_dist = 0.0
-        # self.ube_c_dist = 0.0
-        # self.dist_al = 0.0
-        # self.dist_be = 0.0
-
-        # self.RAD_PER_SEC_2_RPM = 0.0
-        # self.RPM_2_RAD_PER_SEC = 0.0
         self.Machine_init()
 
     def Machine_init(self):
@@ -148,6 +154,11 @@ class ACIM(object):
         self.rpm_deriv_cmd = 0.0
         self.Tload = 0.0
         self.Tem = 0.0
+
+        self.izq = 0.0
+        self.izd = 0.0
+        self.iz = 0.0
+        self.psim = 0.0
 
         self.Lmu = 0.4482
         # Those parameters are introduced since branch saturation
@@ -200,127 +211,81 @@ class ACIM(object):
         self.psimq = 0.0
         self.psimd = 0.0
 
-        self.satLUT = np.array(pd.read_csv(r"33.txt", header=None))
-        self.satLST = (c_float * len(self.satLUT))(*self.satLUT)
-        self.libc = cdll.LoadLibrary("./libsatlut.so")
-        self.libc.sat_lookup.argtypes = [c_double, POINTER(c_float)]
-        self.libc.sat_lookup.restype = c_float
-
+        self.ao_out = args_out()
+        self.librk5 = cdll.LoadLibrary("./rk5/librk5.so")
+        self.librk5.rK555_Sat.argtypes = [args_in]
+        self.librk5.rK555_Sat.restype = args_out
+        self.ai_in = args_in()
+        self.ao_out = args_out()
         self.RAD_PER_SEC_2_RPM = 60.0 / (2 * np.pi * self.npp)
         self.RPM_2_RAD_PER_SEC = (2 * np.pi * self.npp) / 60.0
 
-    # def sat_lookup(self, iz, satLUT):
-    #     if iz >= (444000) * IZ_STEP:
-    #         idx = 444000
-    #         return (
-    #             (iz - idx * IZ_STEP)
-    #             * IZ_STEP_INV
-    #             * (satLUT[idx + 1][0] - satLUT[idx][0])
-    #             + satLUT[idx][0]
-    #         )  # 一阶插值？
-    #     # return satLUT[(int)(iz/IZ_STEP+0.5)]  # This yields bad results with obvious oscillation (voltages and currents)
-    #     idx = int(iz * IZ_STEP_INV)
-    #     return (
-    #         (iz - idx * IZ_STEP) * IZ_STEP_INV * (satLUT[idx + 1][0] - satLUT[idx][0])
-    #         + satLUT[idx][0]
-    #     )  # 一阶插值？
+    def copy_vars_to_in(self):
+        self.ai_in.Llr = self.Llr
+        self.ai_in.Lls = self.Lls
+        self.ai_in.timebase = self.timebase
+        self.ai_in.Ts = self.Ts
+        self.ai_in.ube = self.ube
+        self.ai_in.ual = self.ual
+        self.ai_in.rs = self.rs
+        self.ai_in.rr = self.rr
+        self.ai_in.npp = self.npp
+        self.ai_in.Tload = self.Tload
+        self.ai_in.mu_m = self.mu_m
+        self.ai_in.x0 = self.x0
+        self.ai_in.x1 = self.x1
+        self.ai_in.x2 = self.x2
+        self.ai_in.x3 = self.x3
+        self.ai_in.x4 = self.x4
+        self.ai_in.iqs = self.iqs
+        self.ai_in.ids = self.ids
+        self.ai_in.iqr = self.iqr
+        self.ai_in.idr = self.idr
+        self.ai_in.Tem = self.Tem
+        self.ai_in.izq = self.izq
+        self.ai_in.izd = self.izd
+        self.ai_in.iz = self.iz
+        self.ai_in.psim = self.psim
+        self.ai_in.Lm = self.Lm
+        self.ai_in.LSigmal = self.LSigmal
+        self.ai_in.Lmu = self.Lmu
+        self.ai_in.Lmu_inv = self.Lmu_inv
+        self.ai_in.alpha = self.alpha
+        self.ai_in.rreq = self.rreq
+        self.ai_in.Lsigma = self.Lsigma
+        self.ai_in.Lr_slash_Lm = self.Lr_slash_Lm
+        self.ai_in.Lm_slash_Lr = self.Lm_slash_Lr
 
-    def collectCurrents(self):
-        # Generalised Current by Therrien2013
-        self.izq = self.x1 / self.Lls + self.x3 / self.Llr
-        self.izd = self.x0 / self.Lls + self.x2 / self.Llr
-
-        self.iz = np.sqrt(self.izd ** 2 + self.izq ** 2)
-
-        if self.iz > 1e-8:
-            if SATURATED_MAGNETIC_CIRCUIT:
-                self.psim = self.libc.sat_lookup(self.iz, self.satLST)
-                self.im = self.iz - self.psim / self.LSigmal
-                self.Lm = self.psim / self.im
-                self.Lmu = self.Lm * self.Lm / (self.Lm + self.Llr)
-                self.Lmu_inv = 1.0 / self.Lmu
-                self.alpha = self.rr / (self.Lm + self.Llr)
-                self.rreq = self.Lmu * self.alpha
-                self.Lsigma = (self.Lls + self.Lm) - self.Lmu
-                self.Lm_slash_Lr = self.Lm / (self.Lm + self.Llr)
-                self.Lr_slash_Lm = (self.Lm + self.Llr) / self.Lm
-            else:
-                self.psim = (
-                    1.0 / (1.0 / self.Lm + 1.0 / self.Lls + 1.0 / self.Llr) * self.iz
-                )
-            self.psimq = self.psim / self.iz * self.izq
-            self.psimd = self.psim / self.iz * self.izd
-        else:
-            if selfSIMC_DEBUG:
-                print("how to handle zero iz?\n")
-            self.psimq = 0.0
-            self.psimd = 0.0
-        self.iqs = (self.x1 - self.psimq) / self.Lls
-        self.ids = (self.x0 - self.psimd) / self.Lls
-        self.iqr = (self.x3 - self.psimq) / self.Llr
-        self.idr = (self.x2 - self.psimd) / self.Llr
-        # # Direct compute is ir from psis psir */
-        # self.iqs = (self.x1 - (self.Lm/(self.Lm+self.Llr))*self.x3)/self.Lsigma
-        # self.ids = (self.x0 - (self.Lm/(self.Lm+self.Llr))*self.x2)/self.Lsigma
-        # self.iqr = (self.x3 - (self.Lm/(self.Lm+self.Lls))*self.x1)/(self.Lm+self.Llr-self.Lm*self.Lm/(self.Lm+self.Lls))
-        # self.idr = (self.x2 - (self.Lm/(self.Lm+self.Lls))*self.x0)/(self.Lm+self.Llr-self.Lm*self.Lm/(self.Lm+self.Lls))
-
-    def rK5_satDynamics(self, t, x, fx):
-        # argument t is omitted*/
-
-        # STEP ZERO: collect all the currents: is, ir, iz */
-        self.collectCurrents()
-
-        # STEP ONE: Inverter Nonlinearity Considered */
-        # not CTRL.ual
-        # not CTRL.ube
-
-        # STEP TWO: electromagnetic model with full flux states in alpha-beta frame */
-        fx[1] = self.ube - self.rs * self.iqs  # 这里是反过来的！Q轴在前面！
-        fx[0] = self.ual - self.rs * self.ids
-        fx[3] = -self.rr * self.iqr + x[4] * x[2]  # 这里是反过来的！Q轴在前面！
-        fx[2] = -self.rr * self.idr - x[4] * x[3]
-
-        # STEP THREE: mechanical model */
-        # self.Tem = self.npp*(self.Lm/(self.Lm+self.Llr))*(self.iqs*self.x2-self.ids*self.x3)  # this is not better
-        self.Tem = self.npp * (self.iqs * x[0] - self.ids * x[1])
-        fx[4] = (self.Tem - self.Tload) * self.mu_m
-
-    def rK555_Sat(self, t, x, hs):
-        k1 = [0, 0, 0, 0, 0]
-        k2 = [0, 0, 0, 0, 0]
-        k3 = [0, 0, 0, 0, 0]
-        k4 = [0, 0, 0, 0, 0]
-        xk = [0, 0, 0, 0, 0]
-        fx = [0, 0, 0, 0, 0]
-
-        self.rK5_satDynamics(t, x, fx)  # timer.t,
-        # for i in range(5):
-        k1 = [fx[i] * hs for i in range(5)]
-        xk = [x[i] + k1[i] * 0.5 for i in range(5)]
-
-        self.rK5_satDynamics(t, xk, fx)  # timer.t+hs/2.,
-        # for i in range(5):
-        k2 = [fx[i] * hs for i in range(5)]
-        xk = [x[i] + k2[i] * 0.5 for i in range(5)]
-
-        self.rK5_satDynamics(t, xk, fx)  # timer.t+hs/2.,
-        # for i in range(5):
-        k3 = [fx[i] * hs for i in range(5)]
-        xk = [x[i] + k3[i] for i in range(5)]
-
-        self.rK5_satDynamics(t, xk, fx)  # timer.t+hs,
-        k4 = [fx[i] * hs for i in range(5)]
-        tmp = [
-            x[i] + (k1[i] + 2 * (k2[i] + k3[i]) + k4[i]) * one_over_six
-            for i in range(5)
-        ]
-        self.x0, self.x1, self.x2, self.x3, self.x4 = tmp
-        self.collectCurrents()
+    def copy_vars_from_out(self):
+        self.x0 = self.ao_out.x0
+        self.x1 = self.ao_out.x1
+        self.x2 = self.ao_out.x2
+        self.x3 = self.ao_out.x3
+        self.x4 = self.ao_out.x4
+        self.iqs = self.ao_out.iqs
+        self.ids = self.ao_out.ids
+        self.iqr = self.ao_out.iqr
+        self.idr = self.ao_out.idr
+        self.Tem = self.ao_out.Tem
+        self.izq = self.ao_out.izq
+        self.izd = self.ao_out.izd
+        self.iz = self.ao_out.iz
+        self.psim = self.ao_out.psim
+        self.Lm = self.ao_out.Lm
+        self.LSigmal = self.ao_out.LSigmal
+        self.Lmu = self.ao_out.Lmu
+        self.Lmu_inv = self.ao_out.Lmu_inv
+        self.alpha = self.ao_out.alpha
+        self.rreq = self.ao_out.rreq
+        self.Lsigma = self.ao_out.Lsigma
+        self.Lr_slash_Lm = self.ao_out.Lr_slash_Lm
+        self.Lm_slash_Lr = self.ao_out.Lm_slash_Lr
 
     def machine_simulation(self, timebase):
-        x = [self.x0, self.x1, self.x2, self.x3, self.x4]
-        self.rK555_Sat(timebase, x, self.Ts)
+        self.timebase = timebase
+        self.copy_vars_to_in()
+        self.ao_out = self.librk5.rK555_Sat(self.ai_in)
+        self.copy_vars_from_out()
         self.ial = self.ids  # rK555_Sat
         self.ibe = self.iqs  # rK555_Sat
         self.psi_al = self.x2 * self.Lm_slash_Lr  # rK555_Sat

@@ -72,7 +72,7 @@ def main():
     print("Simulation time=", time.time() - start_time)
     f.close()
 
-    # ACMPlot.draw_trend()
+    ACMPlot.draw_trend()
 
 
 if __name__ == "__main__":

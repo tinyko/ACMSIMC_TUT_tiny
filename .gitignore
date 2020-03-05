@@ -41,7 +41,6 @@ pyrhonen_procedure_s*.tex
 *.cb
 *.cb2
 .*.lb
-*.so
 
 ## Intermediate documents:
 *.dvi
