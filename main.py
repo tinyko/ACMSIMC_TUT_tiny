@@ -20,15 +20,7 @@ def main():
     CTRL = CTRL0(IM)
     sc = s_curve()
 
-    # IM.Machine_init()
-    # OB.acm_init(IM)
-    # OB.ob_init()
-    # CTRL.CTRL_INIT(IM)
-    # IM_items=vars(IM)
-    # OB_items=vars(OB)
-    # CTRL_items=vars(CTRL)
-
-    # print("{0}\n{1}\n{2}\n".format(IM_items,OB_items,CTRL_items))
+    CTRL_items=vars(CTRL)
 
     dfe = 0  # dfe for down frequency execution
 
@@ -38,16 +30,8 @@ def main():
     for _ in range(NUMBER_OF_LINES):
 
         # Command and Load Torque */
-        # cmd_fast_speed_reversal(CTRL.timebase, 5, 5, 1500); // timebase, instant, interval, rpm_cmd
-
-        # CTRL.cmd_fast_speed_reversal(5, 5, 100, IM) # timebase, instant, interval, rpm_cmd
         sc.speed_ref(CTRL.timebase, IM)
-        # ACM.Tload = 5 * sign(ACM.rpm)
-        # if CTRL.timebase>= 5.00275 :
-        #     print('no')
         IM.Tload = 10 * np.sign(IM.rpm)  # No-load test
-        # print(IM.rpm)
-        # ACM.Tload = ACM.Tem; // Blocked-rotor test
 
         # Simulated ACM */
         if IM.machine_simulation(CTRL.timebase):
