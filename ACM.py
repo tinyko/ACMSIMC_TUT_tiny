@@ -17,13 +17,17 @@ Rdiode = 0.05618
 
 class ACIM(object):
     __slot__ = (
-        "ial",
-        "ibe",
-        "psi_al",
-        "psi_be",
-        "ual",
-        "ube",
-        "x",
+        "ial",  # alpha current
+        "ibe",  # beta current
+        "psi_al",  # stator alpha flux
+        "psi_be",  # stator beta flux
+        "ual",  # alpha voltage
+        "ube",  # beta voltage
+        "x0",  #
+        "x1",
+        "x2",
+        "x3",
+        "x4",
         "rpm",
         "rpm_cmd",
         "rpm_deriv_cmd",
@@ -324,10 +328,10 @@ class ACIM(object):
 
         self.rpm = self.x4 * 60 / (2 * np.pi * self.npp)
 
-        if type(self.rpm) != np.nan:
+        if not np.isnan(self.rpm):
             return False
         else:
-            print("self.rpm is {0}\n", self.rpm)
+            # print("self.rpm is {0}\n", self.rpm)
             return True
 
     def InverterNonlinearity_SKSul96(self, ual, ube, ial, ibe):
