@@ -83,62 +83,6 @@ class args_in(Structure):
 
 
 class ACIM(object):
-    __slot__ = (
-        "ial",  # alpha current
-        "ibe",  # beta current
-        "psi_al",  # stator alpha flux
-        "psi_be",  # stator beta flux
-        "ual",  # alpha voltage
-        "ube",  # beta voltage
-        "x0",  #
-        "x1",
-        "x2",
-        "x3",
-        "x4",
-        "rpm",
-        "rpm_cmd",
-        "rpm_deriv_cmd",
-        "Tload",
-        "Tem",
-        "Js",
-        "npp",
-        "mu_m",
-        "Ts",
-        "Lsigma",
-        "rs",
-        "rreq",
-        "Lmu",
-        "Lmu_inv",
-        "alpha",
-        "Lm",
-        "rr",
-        "Lls",
-        "Llr",
-        "Lm_slash_Lr",
-        "Lr_slash_Lm",
-        "LSigmal",
-        "izq",
-        "izd",
-        "iz",
-        "psimq",
-        "psimd",
-        "psim",
-        "im",
-        "iqs",
-        "ids",
-        "iqr",
-        "idr",
-        "ual_c_dist",
-        "ube_c_dist",
-        "dist_al",
-        "dist_be",
-        "RAD_PER_SEC_2_RPM",
-        "RPM_2_RAD_PER_SEC",
-        "satLUT",
-        "satLST",
-        "libc",
-    )
-
     def __init__(self):
         self.Machine_init()
 

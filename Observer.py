@@ -2,8 +2,6 @@ from Utils import *
 
 
 class Tajima(object):
-    __slot__ = ("K_PEM", "omega_syn", "e_M", "omega_sl", "omg")
-
     def __init__(self):
         self.K_PEM = 0.0
         self.omega_syn = 0.0
@@ -13,29 +11,6 @@ class Tajima(object):
 
 
 class InductionMachine(object):
-    __slot__ = (
-        "zeros",
-        "u_s",
-        "i_s",
-        "us_curr",
-        "is_curr",
-        "us_prev",
-        "is_prev",
-        "Js",
-        "Js_inv",
-        "rs",
-        "rreq",
-        "alpha",
-        "Lsigma",
-        "Lsigma_inv",
-        "Lmu",
-        "Lmu_inv",
-        "npp",
-        "omg",
-        "theta_r",
-        "theta_d",
-    )
-
     def __init__(self):
         self.zeros = np.zeros(2)
         self.u_s = self.zeros
@@ -64,43 +39,7 @@ class InductionMachine(object):
 
 
 class Observer(object):
-    __slot__ = (
-        "Js",
-        "Js_inv",
-        "rs",
-        "rreq",
-        "alpha",
-        "Lsigma",
-        "Lsigma_inv",
-        "Lmu",
-        "Lmu_inv",
-        "npp",
-        "omg",
-        "psi_mu_al",
-        "psi_mu_be",
-        "tajima",
-        "im",
-    )
-
     def __init__(self, IM):
-        # self.Js = 0.0
-        # self.Js_inv = 0.0
-
-        # self.rs = 0.0
-        # self.rreq = 0.0
-
-        # self.alpha = 0.0
-        # self.Lsigma = 0.0
-        # self.Lsigma_inv = 0.0
-        # self.Lmu = 0.0
-        # self.Lmu_inv = 0.0
-
-        # self.npp = 0.0
-        # self.omg = 0.0
-
-        # self.psi_mu_al = 0.0
-        # self.psi_mu_be = 0.0
-
         self.tajima = Tajima()
         self.im = InductionMachine()
         self.acm_init(IM)

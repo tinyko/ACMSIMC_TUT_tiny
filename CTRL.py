@@ -3,27 +3,6 @@ import Macros as mc
 
 
 class s_curve(object):
-    __slot__ = (
-        "V_T",
-        "ACC",
-        "DEC",
-        "Start",
-        "dt",
-        "Slow",
-        "F1",
-        "F2",
-        "F3",
-        "F4",
-        "F5",
-        "Target",
-        "Stat",
-        "V_O",
-        "LowV",
-        "Busy",
-        "acc",
-        "dec",
-    )
-
     def __init__(self):
         self.init()
 
@@ -115,8 +94,6 @@ class s_curve(object):
 
 
 class PI_REG:
-    __slot__ = ("Kp", "Ti", "Ki", "i_state", "i_limit")
-
     def __init__(self):
         self.Kp = 0.0
         self.Ti = 0.0
@@ -126,91 +103,9 @@ class PI_REG:
 
 
 class CTRL0(object):
-    __slot__ = (
-        "vc_count",
-        "timebase",
-        "ual",
-        "ube",
-        "rs",
-        "rreq",
-        "Lsigma",
-        "alpha",
-        "Lmu",
-        "Lmu_inv",
-        "Tload",
-        "rpm_cmd",
-        "Js",
-        "Js_inv",
-        "omg_fb",
-        "ial_fb",
-        "ibe_fb",
-        "psi_mu_al_fb",
-        "psi_mu_be_fb",
-        "rotor_flux_cmd",
-        "omg_ctrl_err",
-        "speed_ctrl_err",
-        "iMs",
-        "iTs",
-        "theta_M",
-        "cosT",
-        "sinT",
-        "omega_syn",
-        "omega_sl",
-        "uMs_cmd",
-        "uTs_cmd",
-        "iMs_cmd",
-        "iTs_cmd",
-        "pi_speed",
-        "pi_iMs",
-        "pi_iTs",
-    )
-
     def __init__(self, IM):
-        # self.vc_count = 0
-
-        # self.timebase = 0.0
-
-        # self.ual = 0.0
-        # self.ube = 0.0
-
-        # self.rs = 0.0
-        # self.rreq = 0.0
-        # self.Lsigma = 0.0
-        # self.alpha = 0.0
-        # self.Lmu = 0.0
-        # self.Lmu_inv = 0.0
-
-        # self.Tload = 0.0
-        # self.rpm_cmd = 0.0
-
-        # self.Js = 0.0
-        # self.Js_inv = 0.0
-
-        # self.omg_fb = 0.0
-        # self.ial_fb = 0.0
-        # self.ibe_fb = 0.0
-        # self.psi_mu_al_fb = 0.0
-        # self.psi_mu_be_fb = 0.0
-
-        # self.rotor_flux_cmd = 0.0
-
-        # self.omg_ctrl_err = 0.0
-        # self.speed_ctrl_err = 0.0
-
         self.iMs = 0.0
         self.iTs = 0.0
-
-        # self.theta_M = 0.0
-        # self.cosT = 0.0
-        # self.sinT = 0.0
-
-        # self.omega_syn = 0.0
-        # self.omega_sl = 0.0
-
-        # self.uMs_cmd = 0.0
-        # self.uTs_cmd = 0.0
-        # self.iMs_cmd = 0.0
-        # self.iTs_cmd = 0.0
         self.pi_speed = PI_REG()
         self.pi_iMs = PI_REG()
         self.pi_iTs = PI_REG()
