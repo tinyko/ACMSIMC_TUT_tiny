@@ -29,6 +29,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
     - **B-H_Cruve** : Draw B-H curve from 33.txt
     - **LZ4-example** : Test LZ4 and Zstandard performance
     - **ResultPrint** : Print result table in tabulate
+    - **rk4** : Runge-Kutta 4th ODE solver in C shared library
 
 - 6th-Derivative-Of-Position (for motion control)
 
@@ -129,18 +130,12 @@ TO DO List
     - Issues
       - Stiff problems
       - Stability and convergence
-12. Decoupling sub-modules
-13. cProfile found out some slow code in main loop:
+12. ~~Decoupling sub-modules~~
+13. ~~cProfile found out some slow code in main loop in cProfile.ps1 file:~~
 
 ```Shell
    cprofilev -f .\log.txt
 ```
-
-![Screenshot](./Screenshot/cProfile.jpg "cProfile main.py")
-
-~~2020-02-21 TODO :**optimize "machine simulation loop"**~~
-![Screenshot](./Screenshot/cProfile_improved.jpg "cProfile improved")
-
 Done List
 
 1. ~~Converted C program into Python Single File "Alter"~~
@@ -149,3 +144,21 @@ Done List
 4. ~~numpy ndarray could be converted into bytes , vice versa~~
 5. ~~Add a 6th-order speed ref curve~~
 6. ~~Add \__slot__ to Class object~~
+
+## Benchmarks
+```
+2020-02-16 Python 3.8.1 TotalTime:22.796 seconds
+```
+![Screenshot](./Screenshot/cProfile.jpg "cProfile main.py")
+
+```
+2020-02-21 Python 3.8.1 TotalTime:18.026 seconds
+```
+![Screenshot](./Screenshot/cProfile_improved.jpg "cProfile improved")
+
+```
+2020-03-05 Python 3.8.1 TotalTime:6.308 seconds
+```
+~~**Great Performance Achived**~~
+![Screenshot](./Screenshot/cProfile_improved3.jpg "cProfile improved3")
+
