@@ -1,5 +1,8 @@
 {
     "files.associations": {
         "acmsim.h": "c"
-    }
+    },
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.banditEnabled": false
 }

@@ -1,4 +1,4 @@
-from Utils import *
+from Utils import MACHINE_TYPE, INDUCTION_MACHINE, TS, np
 
 
 class Tajima(object):
@@ -120,11 +120,12 @@ class Observer(object):
             self.tajima.omega_syn - self.tajima.omega_sl
         )  # Instantaneous Velocity Computation
 
-        # Flux estimation 1: Voltage model (implemented by shitty Euler method for now)
+        # Flux estimation 1: Voltage model
+        # (implemented by shitty Euler method for now)
 
         deriv_psi_s_al = self.im.us_curr[0] - self.rs * self.im.is_curr[0]
         deriv_psi_s_be = self.im.us_curr[1] - self.rs * self.im.is_curr[1]
-        psi_s_al = psi_s_be = 0
+        # psi_s_al = psi_s_be = 0
 
         self.psi_s_al += TS * deriv_psi_s_al
         self.psi_s_be += TS * deriv_psi_s_be

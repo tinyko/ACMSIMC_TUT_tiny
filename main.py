@@ -1,11 +1,12 @@
 from ACM import ACIM
 from CTRL import CTRL0, s_curve
 from Observer import Observer
-from Utils import *
+from Utils import np, NUMBER_OF_LINES, DOWN_FREQ_EXE, TS
 from FileIO import FileIO
 
 # import Macros as mc
 import ACMPlot
+import time
 
 # import cProfile
 
@@ -20,7 +21,7 @@ def main():
     CTRL = CTRL0(IM)
     sc = s_curve()
 
-    CTRL_items=vars(CTRL)
+    # CTRL_items=vars(CTRL)
 
     dfe = 0  # dfe for down frequency execution
 

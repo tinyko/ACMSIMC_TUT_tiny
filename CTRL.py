@@ -1,4 +1,17 @@
-from Utils import *
+from Utils import (
+    np,
+    TS,
+    VC_LOOP_CEILING,
+    DOWN_FREQ_EXE_INVERSE,
+    CONTROL_STRATEGY,
+    VVVF_CONTROL,
+    SENSORLESS_CONTROL,
+    DFOC,
+    IFOC,
+    OMG1,
+    M1,
+    VOLTAGE_CURRENT_DECOUPLING_CIRCUIT,
+)
 import Macros as mc
 
 
@@ -246,7 +259,8 @@ class CTRL0(object):
             1.5  # f(speed, dc bus voltage, last torque current command)
         )
         # CTRL.rotor_flux_cmd = 3;
-        # 1. speed is compared with the base speed to decide flux weakening or not
+        # 1. speed is compared with the base speed
+        # to decide flux weakening or not
         # 2. dc bus voltage is required for certain application
         # 3. last torque current command is required for loss minimization
 
@@ -308,7 +322,7 @@ class CTRL0(object):
 
         # Current loop decoupling (skipped, see Chen.Huang-Stable)
         #   # Steady state dynamics based decoupling circuits for current regulation
-        if VOLTAGE_CURRENT_DECOUPLING_CIRCUIT == True:
+        if VOLTAGE_CURRENT_DECOUPLING_CIRCUIT:
             self.uMs_cmd = vM + (self.Lsigma) * (
                 -self.omega_syn * self.iTs
             )  # Telford03/04

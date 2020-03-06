@@ -1,5 +1,13 @@
-from Utils import *
-from ctypes import *
+from Utils import (
+    np,
+    MACHINE_TS,
+    INVERTER_NONLINEARITY,
+    TS_INVERSE,
+    SQRT_2_SLASH_3,
+    SIN_DASH_2PI_SLASH_3,
+    SIN_2PI_SLASH_3,
+)
+from ctypes import Structure, c_double, cdll
 
 _Vce0 = 1.8  # V
 _Vd0 = 1.3  # V
@@ -116,7 +124,8 @@ class ACIM(object):
             self.Lm + self.Llr
         ) / self.Lm  # i_dreq = self.idr*self.Lr_slash_Lm
         self.LSigmal = 1.0 / (1.0 / self.Lls + 1.0 / self.Llr)
-        self.Lsigma = self.Lm + self.Lls - self.Lmu  # = Ls * (1.0 - Lm*Lm/Ls/Lr)
+        self.Lsigma = self.Lm + self.Lls - self.Lmu
+        # = Ls * (1.0 - Lm*Lm/Ls/Lr)
         print(
             "Validate: {0} = {1} ?\n".format(
                 self.Lsigma,
