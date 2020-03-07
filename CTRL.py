@@ -54,10 +54,10 @@ class s_curve(object):
         if (np.abs(self.V_O - self.Target) > 0.001) and (not self.Busy):
             if self.Target > self.V_O:
                 h = self.dt / ((self.Target - self.V_O) / 60 / self.ACC) / 1000
-                acc = 1
+                self.acc = 1
             elif self.Target < self.V_O:
                 h = self.dt / ((self.V_O - self.Target) / 60 / self.DEC) / 1000
-                dec = 1
+                self.dec = 1
             h3 = h * h * h
             h4 = h3 * h
             h5 = h4 * h
