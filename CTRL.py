@@ -91,13 +91,13 @@ class s_curve(object):
             self.acc = False
             self.dec = False
 
-    def speed_ref(self, timebase, IM):
+    def speed_ref(self, timebase, speed, IM):
         if timebase > 5.0 and timebase <= 10.0:
-            self.V_T = 100
+            self.V_T = speed
             self.ref()
             tmp = self.V_O
         elif timebase > 10.0:
-            self.V_T = -100
+            self.V_T = -speed
             self.ref()
             tmp = self.V_O
         else:
@@ -170,7 +170,7 @@ class CTRL0(object):
 
         # ver. IEMDC
         self.pi_speed.Kp = 30
-        self.pi_speed.Ti = 0.8
+        self.pi_speed.Ti = 0.5
         self.pi_speed.Ki = (
             (self.pi_speed.Kp * 4.77)
             / self.pi_speed.Ti
@@ -247,7 +247,7 @@ class CTRL0(object):
             self.rreq = OB.rreq
 
         # Flux (linkage) command
-        self.rotor_flux_cmd = 5  # f(speed, dc bus voltage, last torque current command)
+        self.rotor_flux_cmd = 2  # f(speed, dc bus voltage, last torque current command)
         # CTRL.rotor_flux_cmd = 3;
         # 1. speed is compared with the base speed
         # to decide flux weakening or not

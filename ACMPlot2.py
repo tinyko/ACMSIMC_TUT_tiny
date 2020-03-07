@@ -6,10 +6,10 @@ import pandas as pd
 import numpy as np
 
 
-def draw_plotly():
+def draw_plotly(RUN_TIME, MACHINE_TS_INVERSE):
     df = pd.read_csv("algorithm.dat", sep=",")
 
-    time = np.linspace(0, 15, 60000)
+    time = np.linspace(0, RUN_TIME, int(RUN_TIME * MACHINE_TS_INVERSE / 2))
 
     df["time"] = time
 

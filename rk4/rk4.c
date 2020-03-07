@@ -128,12 +128,12 @@ struct args_out rK4_Sat(struct args_in ai_in)
         k4[i] = fx[i] * hs;
         x[i] = x[i] + (k1[i] + 2 * (k2[i] + k3[i]) + k4[i]) / 6;
     }
+    collectCurrents();
     ai.x0 = x[0];
     ai.x1 = x[1];
     ai.x2 = x[2];
     ai.x3 = x[3];
     ai.x4 = x[4];
-    collectCurrents();
     copy_args_out();
     return ao;
 }
