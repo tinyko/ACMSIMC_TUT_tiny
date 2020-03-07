@@ -1,6 +1,6 @@
 # AC Induction Motor Simulation in Python
 
-![Screenshot](./Screenshot/ACMPlot2-Plotly.jpg "Screenshot in vscode")
+![Screenshot](./Screenshot/ACMPlot2-Plotly2.jpg "Screenshot in vscode")
 <!---
 ![Screenshot](./Screenshot/6th-Spd-Ref.jpg "6th-Order Speed Reference")
 --->
