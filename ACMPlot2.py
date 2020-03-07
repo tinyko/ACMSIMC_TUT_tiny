@@ -67,7 +67,7 @@ def draw_plotly():
         subplot_titles=(
             r"$Voltage\ in\ \alpha\beta\ frame$",
             r"$Current\ in\ \alpha\beta\ frame$",
-            r"$Speed\ Command\ and\ Measurment$",
+            r"$Speed\ Command\ and\ Measurement$",
             r"$Eletromagnetic\ Torque$",
         ),
     )
