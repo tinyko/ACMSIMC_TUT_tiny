@@ -1,9 +1,22 @@
 # AC Induction Motor Simulation in Python
 
+## Overview
+
+```
+❯ python .\main.py
+Validate: 0.02486440087288949 = 0.024864400872889467 ?
+
+Kp_omg=30, Ki_omg=0.08943749999999999
+
+Kp_cur=20, Ki_cur=0.005
+
+Simulation time= 4.9560019969940186
+```
 ![Screenshot](./Screenshot/ACMPlot2-Plotly.jpg "Screenshot in vscode")
 <!---
 ![Screenshot](./Screenshot/6th-Spd-Ref.jpg "6th-Order Speed Reference")
 --->
+
 ## Introduction
 
 This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_motor">AC induction motor</a> in Python.
