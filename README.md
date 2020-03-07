@@ -10,7 +10,8 @@ Kp_omg=30, Ki_omg=0.08943749999999999
 
 Kp_cur=20, Ki_cur=0.005
 
-Simulation time= 4.9560019969940186
+Simulation Run Time=15.0 s
+Simulation Costs Time=4.840036630630493 s
 ```
 ![Screenshot](./Screenshot/ACMPlot2-Plotly.jpg "Screenshot in vscode")
 <!---

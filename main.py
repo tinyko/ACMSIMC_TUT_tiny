@@ -1,7 +1,7 @@
 from ACM import ACIM
 from CTRL import CTRL0, s_curve
 from Observer import Observer
-from Utils import np, NUMBER_OF_LINES, DOWN_FREQ_EXE, TS
+from Utils import np, NUMBER_OF_LINES, DOWN_FREQ_EXE, TS, RUN_TIME
 from FileIO import FileIO
 
 # import Macros as mc
@@ -22,7 +22,7 @@ def main():
     sc = s_curve()
 
     # CTRL_items=vars(CTRL)
-
+    print("Simulation Run Time={0} s".format(RUN_TIME))
     dfe = 0  # dfe for down frequency execution
 
     f = open(r"algorithm.dat", "w")
@@ -56,7 +56,7 @@ def main():
             CTRL.control(IM.rpm_cmd, 0, OB, IM)
 
         IM.inverter_model(CTRL)
-    print("Simulation time=", time.time() - start_time)
+    print("Simulation Costs Time={0} s".format(time.time() - start_time))
     f.close()
 
     ACMPlot2.draw_plotly()
