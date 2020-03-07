@@ -69,15 +69,17 @@ def draw_plotly(RUN_TIME, MACHINE_TS_INVERSE):
             r"$Current\ in\ \alpha\beta\ frame$",
             r"$Speed\ Command\ and\ Measurement$",
             r"$Eletromagnetic\ Torque$",
+            # r"$error rpm$",
         ),
     )
-
-    # fig.add_traces(data=data, rows=[1, 1], cols=[1, 1])
-    # fig.add_traces(data=data2, rows=[2, 2], cols=[1, 1])
+    trace12 = go.Scatter(
+        x=df["time"], y=df["e_omega"], name="e_rpm", line=dict(color=color2)
+    )
     fig.add_traces(data=data4, rows=[1, 1], cols=[1, 1])
     fig.add_traces(data=data5, rows=[2, 2], cols=[1, 1])
     fig.add_traces(data=data3, rows=[3, 3], cols=[1, 1])
     fig.add_trace(trace7, row=4, col=1)
+    # fig.add_trace(trace12, row=3, col=1)
 
     fig.update_layout(height=900, showlegend=False)
     fig.show()

@@ -15,7 +15,7 @@ class FileIO:
         f2.write("{0}, {1}\n".format(TS, DOWN_SAMPLE))
         f2.close()
 
-    def write_data_to_file(self, f, IM, CTRL):
+    def write_data_to_file(self, f, IM, IM2):
         self.j += 1
         if self.j == DOWN_SAMPLE:
             self.j = 0
@@ -32,6 +32,6 @@ class FileIO:
                     IM.ial,
                     IM.ibe,
                     IM.rpm_cmd,
-                    IM.rpm_cmd - IM.x4 * IM.RAD_PER_SEC_2_RPM,
+                    IM2.x4 * IM2.RAD_PER_SEC_2_RPM - IM.x4 * IM.RAD_PER_SEC_2_RPM,
                 )
             )
