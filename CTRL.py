@@ -169,7 +169,7 @@ class CTRL0(object):
         self.omega_sl = 0.0
 
         # ver. IEMDC
-        self.pi_speed.Kp = 10
+        self.pi_speed.Kp = 30
         self.pi_speed.Ti = 0.8
         self.pi_speed.Ki = (
             (self.pi_speed.Kp * 4.77)
@@ -181,18 +181,18 @@ class CTRL0(object):
 
         print("Kp_omg={0}, Ki_omg={1}\n".format(self.pi_speed.Kp, self.pi_speed.Ki))
 
-        self.pi_iMs.Kp = 15  # cutoff frequency of 1530 rad/s
-        self.pi_iMs.Ti = 0.08
+        self.pi_iMs.Kp = 20  # cutoff frequency of 1530 rad/s
+        self.pi_iMs.Ti = 1
         self.pi_iMs.Ki = self.pi_iMs.Kp / self.pi_iMs.Ti * TS  # =0.025
         self.pi_iMs.i_state = 0.0
         self.pi_iMs.i_limit = 350  # 350.0  # unit: Volt
 
-        self.pi_iTs.Kp = 15
-        self.pi_iTs.Ti = 0.08
+        self.pi_iTs.Kp = 20
+        self.pi_iTs.Ti = 1
         self.pi_iTs.Ki = self.pi_iTs.Kp / self.pi_iTs.Ti * TS
         # self.pi_iTs.Ki = 0.0
         self.pi_iTs.i_state = 0.0
-        self.pi_iTs.i_limit = 650  # unit: Volt, 350V->max 1300rpm
+        self.pi_iTs.i_limit = 350  # unit: Volt, 350V->max 1300rpm
 
         print("Kp_cur={0}, Ki_cur={1}\n".format(self.pi_iMs.Kp, self.pi_iMs.Ki))
 
@@ -213,14 +213,6 @@ class CTRL0(object):
         elif output < -r.i_limit:
             output = -r.i_limit
         return output
-
-    def cmd_fast_speed_reversal(self, instant, interval, rpm_cmd, IM):
-        if self.timebase > instant + 2 * interval:
-            IM.rpm_cmd = rpm_cmd
-        elif self.timebase > instant + interval:
-            IM.rpm_cmd = -rpm_cmd
-        elif self.timebase > instant:
-            IM.rpm_cmd = rpm_cmd
 
     def control(self, speed_cmd, speed_cmd_dot, OB, IM):
         # OPEN LOOP CONTROL
@@ -255,9 +247,7 @@ class CTRL0(object):
             self.rreq = OB.rreq
 
         # Flux (linkage) command
-        self.rotor_flux_cmd = (
-            1.5  # f(speed, dc bus voltage, last torque current command)
-        )
+        self.rotor_flux_cmd = 5  # f(speed, dc bus voltage, last torque current command)
         # CTRL.rotor_flux_cmd = 3;
         # 1. speed is compared with the base speed
         # to decide flux weakening or not

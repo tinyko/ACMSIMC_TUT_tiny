@@ -1,9 +1,9 @@
 # AC Induction Motor Simulation in Python
 
-![Screenshot](./Screenshot/SeparateModules.jpg "Screenshot in vscode")
-
+![Screenshot](./Screenshot/ACMPlot2-Plotly.jpg "Screenshot in vscode")
+<!---
 ![Screenshot](./Screenshot/6th-Spd-Ref.jpg "6th-Order Speed Reference")
-
+--->
 ## Introduction
 
 This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_motor">AC induction motor</a> in Python.
@@ -25,6 +25,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
     - **FileIO** : File Input and Output class
     - **Macros** : All lambda functions
     - **ACMPlot** : Draw Treand plot
+    - **ACMPlot2** : Draw Trend plot in Plotly
   - **Addition Files**
     - **B-H_Cruve** : Draw B-H curve from 33.txt
     - **LZ4-example** : Test LZ4 and Zstandard performance
@@ -46,7 +47,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
 
 - HOWTO
 
-  - Open your favourite Terminal/Shell
+  - Open your powershell in windows
   - Change work path to a directory you like
   - Run code below line-by-line
 
@@ -54,6 +55,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
     mkdir ACMSIM
     cd ACMSIM
     git clone https://github.com/tinyko/_TINY_ACMSIMC.git .
+    ./make.ps1
     python main.py
     ```
 
@@ -107,7 +109,7 @@ This project aims to simulate <a href="https://en.wikipedia.org/wiki/Induction_m
 TO DO List
 
 1. ~~Separate Programm Functions into different python modules~~
-2. GUI in PyQT5 (~~Auto Scale GUI, QT GUI layout~~)
+2. GUI in PyQT5 (~~Auto Scale GUI, QT GUI layout~~) / PySimpleGui
 3. Async communications between Real-time and GUI module
 4. Design a python to c source translator(like simulink) (further plan)
 5. ~~motor topology~~

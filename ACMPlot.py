@@ -8,7 +8,7 @@ from collections import OrderedDict as O
 import pandas as pd
 import matplotlib
 
-matplotlib.use("QT5Agg")
+matplotlib.use("TkAgg")
 
 ######################
 # Plotting
@@ -130,4 +130,5 @@ def draw_trend():
     # ax_list[12].plot(time,df_profiles["rpm_mes"],color="red")
     # fm=plt.get_current_fig_manager()
     # fm.window.showMaximized()
-    plt.show()
+    figs = plt.gcf()
+    return figs

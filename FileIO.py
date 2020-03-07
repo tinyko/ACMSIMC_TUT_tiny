@@ -7,7 +7,7 @@ class FileIO:
 
     def write_header_to_file(self, f):
         f.write(
-            "ACM.x0,ACM.x1,ACM.x2,ACM.x3,ACM.x4,ACM.Tem,CTRL.uMs_CMD,CTRL.uTs_CMD,CTRL.iMs_e,CTRL.iTs_e,ACM.rpm_cmd,e_omega\n"
+            "ACM.x0,ACM.x1,ACM.x2,ACM.x3,ACM.x4,ACM.Tem,ACM.ual,ACM.ube,ACM.ial,ACM.ibe,ACM.rpm_cmd,e_omega\n"
         )
 
         f2 = open(r"info.dat", "w")
@@ -27,10 +27,10 @@ class FileIO:
                     IM.x3,
                     IM.x4,
                     IM.Tem,
-                    CTRL.uMs_cmd,
-                    CTRL.uTs_cmd,
-                    CTRL.iMs - CTRL.iMs_cmd,
-                    CTRL.iTs - CTRL.iTs_cmd,
+                    IM.ual,
+                    IM.ube,
+                    IM.ial,
+                    IM.ibe,
                     IM.rpm_cmd,
                     IM.rpm_cmd - IM.x4 * IM.RAD_PER_SEC_2_RPM,
                 )

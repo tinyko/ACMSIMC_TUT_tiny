@@ -5,7 +5,7 @@ from Utils import np, NUMBER_OF_LINES, DOWN_FREQ_EXE, TS
 from FileIO import FileIO
 
 # import Macros as mc
-import ACMPlot
+import ACMPlot2
 import time
 
 # import cProfile
@@ -32,8 +32,10 @@ def main():
 
         # Command and Load Torque */
         sc.speed_ref(CTRL.timebase, IM)
-        IM.Tload = 10 * np.sign(IM.rpm)  # No-load test
-
+        if CTRL.timebase > 1.0:
+            IM.Tload = 0 * IM.rpm * 0.05
+        else:
+            IM.Tload = 0
         # Simulated ACM */
         if IM.machine_simulation(CTRL.timebase):
             print("Break the loop.\n")
@@ -57,7 +59,7 @@ def main():
     print("Simulation time=", time.time() - start_time)
     f.close()
 
-    ACMPlot.draw_trend()
+    ACMPlot2.draw_plotly()
 
 
 if __name__ == "__main__":

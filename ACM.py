@@ -144,7 +144,7 @@ class ACIM(object):
         self.alpha = self.rreq / (self.Lmu)
         self.Lmu_inv = 1.0 / self.Lmu
 
-        self.Js = 0.0636  # Awaya92 using im.omg
+        self.Js = 0.0636 + 0.51  # Awaya92 using im.omg
         self.npp = 2
         self.mu_m = self.npp / self.Js
 
