@@ -1,7 +1,8 @@
 from ACM import ACIM
 from CTRL import CTRL0, s_curve
 from Observer import Observer
-from Utils import np, NUMBER_OF_LINES, DOWN_FREQ_EXE, TS, RUN_TIME, MACHINE_TS_INVERSE
+from Utils import (np, NUMBER_OF_LINES, DOWN_FREQ_EXE,
+                   TS, RUN_TIME, MACHINE_TS_INVERSE)
 from FileIO import FileIO
 
 # import Macros as mc
@@ -18,6 +19,11 @@ def main():
     start_time = time.time()
     IM = ACIM()
     IM2 = ACIM()
+    # IM.Js = IM.Js - 0.2
+    # IM.mu_m = IM.npp / IM.Js
+    # IM2.Js = IM2.Js + 0.2
+    # IM2.mu_m = IM2.npp / IM2.Js
+    print(IM.Js, IM2.Js)
     OB = Observer(IM)
     OB2 = Observer(IM2)
     CTRL = CTRL0(IM)
@@ -33,11 +39,12 @@ def main():
     f = open(r"algorithm.dat", "w")
     fio = FileIO()
     fio.write_header_to_file(f)
+
     for _ in range(NUMBER_OF_LINES):
 
         # Command and Load Torque */
-        sc.speed_ref(CTRL.timebase, 100, IM)
-        sc2.speed_ref(CTRL2.timebase, 100, IM2)
+        sc.speed_ref_sin(CTRL.timebase, 500, IM)
+        sc2.speed_ref_sin(CTRL2.timebase, 500, IM2)
         # if CTRL.timebase > 1.0:
         #     IM.Tload = 0 * IM.rpm * 0.05
         # else:
@@ -48,12 +55,11 @@ def main():
         ):
             print("Break the loop.\n")
             break
-        IM.Js += 0.5
-        IM2.Js -= 0.5
-        IM.Tload = 300 * (IM.x4 * IM.RAD_PER_SEC_2_RPM - IM2.x4 * IM2.RAD_PER_SEC_2_RPM)
-        IM2.Tload = -300 * (
-            IM.x4 * IM.RAD_PER_SEC_2_RPM - IM2.x4 * IM2.RAD_PER_SEC_2_RPM
-        )
+        # IM.Tload = 300 *
+        # (IM.x4 * IM.RAD_PER_SEC_2_RPM - IM2.x4 * IM2.RAD_PER_SEC_2_RPM)
+        # IM2.Tload = -300 * (
+        #     IM.x4 * IM.RAD_PER_SEC_2_RPM - IM2.x4 * IM2.RAD_PER_SEC_2_RPM
+        # )
         dfe += 1
         if dfe == DOWN_FREQ_EXE:
             dfe = 0
@@ -66,7 +72,7 @@ def main():
             OB.observation(CTRL)
             OB2.observation(CTRL2)
 
-            fio.write_data_to_file(f, IM, IM2)
+            fio.write_data_to_file(f, IM, IM2, CTRL)
 
             CTRL.control(IM.rpm_cmd, 0, OB, IM)
             CTRL2.control(IM2.rpm_cmd, 0, OB2, IM2)

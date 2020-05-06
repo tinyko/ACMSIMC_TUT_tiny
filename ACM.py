@@ -11,7 +11,7 @@ from ctypes import Structure, c_double, cdll
 
 _Vce0 = 1.8  # V
 _Vd0 = 1.3  # V
-_Udc = 300  # V
+_Udc = 540  # V
 _Toff = 0.32e-6  # sec
 _Ton = 0.15e-6  # sec
 _Tdead = 3.30e-6  # sec
@@ -144,7 +144,7 @@ class ACIM(object):
         self.alpha = self.rreq / (self.Lmu)
         self.Lmu_inv = 1.0 / self.Lmu
 
-        self.Js = 0.0636 + 0.51  # Awaya92 using im.omg
+        self.Js = 0.074129051842689069  # Awaya92 using im.omg
         self.npp = 2
         self.mu_m = self.npp / self.Js
 

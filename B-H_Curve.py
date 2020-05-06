@@ -168,6 +168,6 @@ plt.legend(
 )
 plt.grid(color=[171 / 255, 209 / 255, 57 / 255])
 
-# plt.savefig("B-H_Curve_NonOriented.pdf")
+plt.savefig("B-H_Curve_NonOriented.pdf")
 
-plt.show()
+# plt.show()

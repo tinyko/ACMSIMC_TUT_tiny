@@ -21,8 +21,8 @@ class s_curve(object):
 
     def init(self):
         self.V_T = 0.0
-        self.ACC = 2
-        self.DEC = 2
+        self.ACC = 6
+        self.DEC = 6
         self.Start = True
         self.dt = 0.125  # micro second
         self.Slow = False
@@ -105,6 +105,17 @@ class s_curve(object):
             tmp = self.V_O
         IM.rpm_cmd = tmp
 
+    def speed_ref_sin(self, timebase, speed, IM):
+        if timebase > 1.0 and timebase < 4.0:
+            self.V_T = speed
+            self.ref()
+            IM.rpm_cmd = self.V_O
+        elif timebase >= 4.0:
+            IM.rpm_cmd = speed + 50 * np.sin(2 * np.pi * (timebase - 2.0) / 4)
+        else:
+            self.ref()
+            IM.rpm_cmd = self.V_O
+
 
 class PI_REG:
     def __init__(self):
@@ -177,7 +188,7 @@ class CTRL0(object):
             * (TS * VC_LOOP_CEILING * DOWN_FREQ_EXE_INVERSE)
         )
         self.pi_speed.i_state = 0.0
-        self.pi_speed.i_limit = 8
+        self.pi_speed.i_limit = 100
 
         print("Kp_omg={0}, Ki_omg={1}\n".format(self.pi_speed.Kp, self.pi_speed.Ki))
 
